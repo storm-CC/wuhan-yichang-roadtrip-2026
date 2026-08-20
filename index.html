@@ -38,6 +38,7 @@
 
     body {
       margin: 0;
+      overflow-x: hidden;
       color: var(--ink);
       background:
         radial-gradient(circle at 84% 4%, rgba(95, 208, 176, 0.17), transparent 27rem),
@@ -135,14 +136,23 @@
       font-size: clamp(3rem, 8vw, 6.9rem);
       line-height: 0.98;
       letter-spacing: -0.065em;
+      overflow-wrap: anywhere;
     }
 
-    h1 span {
+    h1 .title-main {
+      display: block;
+      color: var(--ink);
+      -webkit-text-stroke: 0;
+    }
+
+    h1 .title-sub {
       display: block;
       margin-top: 14px;
       color: transparent;
       -webkit-text-stroke: 1.5px rgba(244, 241, 232, 0.72);
     }
+
+    .mobile-break { display: none; }
 
     .hero-copy {
       max-width: 750px;
@@ -196,6 +206,7 @@
     }
 
     .stat {
+      min-width: 0;
       padding: 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
@@ -208,6 +219,7 @@
       color: var(--gold-soft);
       font-size: clamp(1.45rem, 4vw, 2.15rem);
       line-height: 1.1;
+      overflow-wrap: anywhere;
     }
 
     .stat span {
@@ -657,10 +669,13 @@
     @media (max-width: 640px) {
       :root { --content: min(100% - 22px, 1160px); }
       .site-header { min-height: auto; padding: 58px 0 100px; }
-      h1 { font-size: clamp(3rem, 16vw, 4.7rem); }
+      h1 { font-size: clamp(2.8rem, 13.5vw, 3.9rem); line-height: 1.02; word-break: break-word; }
+      h1 .title-sub { font-size: .88em; line-height: 1.08; }
+      .mobile-break { display: block; }
       .hero-copy { font-size: 1rem; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats { grid-template-columns: 1fr; width: 100%; }
       .stat { padding: 16px; }
+      .stat strong { font-size: 1.45rem; }
       main { padding-top: 56px; }
       .overview-grid { grid-template-columns: 1fr; }
       .overview-card { min-height: 0; }
@@ -699,7 +714,7 @@
       .site-header { min-height: 0; padding: 24px 0; color: #111; border-bottom: 2px solid #111; }
       .site-header::before, .site-header::after, .date-nav, .hero-actions, .top-button, .toggle-details { display: none !important; }
       h1 { font-size: 34pt; letter-spacing: -.04em; }
-      h1 span { color: #111; -webkit-text-stroke: 0; }
+      h1 .title-main, h1 .title-sub { color: #111; -webkit-text-stroke: 0; }
       .hero-copy, .stat span, .route-line, .section-heading p, .day-weekday, .schedule span, .detail-box p { color: #444; }
       .stats { margin-top: 20px; }
       .stat { color: #111; border: 1px solid #bbb; background: #fff; }
@@ -725,7 +740,7 @@
   <header class="site-header" id="top">
     <div class="hero">
       <p class="eyebrow">2026 Golden Week Road Trip</p>
-      <h1>穿过峡江与群山<span>武汉 · 宜昌 · 神农架 · 八面山</span></h1>
+      <h1><span class="title-main">穿过峡江<br class="mobile-break">与群山</span><span class="title-sub">武汉 · 宜昌 · <br class="mobile-break">神农架 · 八面山</span></h1>
       <p class="hero-copy">9月30日14:00武汉出发，沿G348进入西陵峡，经神农顶、大九湖与三峡之巅，最终在八面山看日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#overview">查看行程总览 ↓</a>
