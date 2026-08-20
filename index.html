@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071a2d">
+  <meta name="description" content="2026年国庆武汉出发，途经宜昌、G348、芝茅公路、神农架、三峡之巅、八面山和醴陵的8天自驾计划。">
+  <title>2026 国庆 · 鄂西到湘西自驾计划</title>
+  <style>
+    :root {
+      --ink: #f4f1e8;
+      --muted: #aebdca;
+      --navy-950: #04111f;
+      --navy-900: #071a2d;
+      --navy-800: #0d2943;
+      --navy-700: #123957;
+      --paper: #f5f0e5;
+      --paper-ink: #1a2a36;
+      --gold: #f2b84b;
+      --gold-soft: #ffd983;
+      --jade: #5fd0b0;
+      --sky: #8bd3ff;
+      --danger: #ff8a75;
+      --line: rgba(255, 255, 255, 0.12);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --content: min(1160px, calc(100vw - 32px));
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--navy-950);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 84% 4%, rgba(95, 208, 176, 0.17), transparent 27rem),
+        radial-gradient(circle at 5% 24%, rgba(139, 211, 255, 0.12), transparent 28rem),
+        linear-gradient(180deg, var(--navy-900), var(--navy-950) 55%, #020a12);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    button, a { font: inherit; }
+
+    a { color: inherit; }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--gold-soft);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 100;
+      transform: translateY(-180%);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--paper-ink);
+      text-decoration: none;
+      transition: transform 160ms ease;
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      position: relative;
+      overflow: hidden;
+      min-height: 660px;
+      display: grid;
+      align-items: center;
+      padding: 72px 0 110px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .site-header::before,
+    .site-header::after {
+      content: "";
+      position: absolute;
+      inset: auto -10vw 0;
+      height: 42%;
+      background: linear-gradient(135deg, transparent 22%, rgba(95, 208, 176, 0.08) 22.5%, transparent 48%),
+                  linear-gradient(26deg, #081b2b 0 32%, #0b2235 32.5% 56%, #071724 56.5%);
+      clip-path: polygon(0 100%, 0 68%, 15% 44%, 26% 64%, 43% 22%, 58% 64%, 72% 36%, 86% 58%, 100% 27%, 100% 100%);
+      pointer-events: none;
+    }
+
+    .site-header::after {
+      height: 28%;
+      opacity: 0.7;
+      transform: translateY(24%);
+      filter: blur(1px);
+    }
+
+    .hero {
+      width: var(--content);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--gold-soft);
+      font-size: 0.9rem;
+      font-weight: 750;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 860px;
+      font-size: clamp(3rem, 8vw, 6.9rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: 14px;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(244, 241, 232, 0.72);
+    }
+
+    .hero-copy {
+      max-width: 750px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 11px 20px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255,255,255,.06);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.35);
+      background: rgba(255,255,255,.1);
+    }
+
+    .button-primary {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: #172331;
+      font-weight: 800;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 900px;
+      margin-top: 52px;
+    }
+
+    .stat {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(3, 16, 28, 0.52);
+      backdrop-filter: blur(12px);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold-soft);
+      font-size: clamp(1.45rem, 4vw, 2.15rem);
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .date-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: rgba(4, 17, 31, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .date-nav-inner {
+      width: var(--content);
+      margin: 0 auto;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 0;
+      scrollbar-width: none;
+    }
+
+    .date-nav-inner::-webkit-scrollbar { display: none; }
+
+    .date-nav a {
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .date-nav a:hover {
+      color: var(--ink);
+      background: rgba(255,255,255,.08);
+    }
+
+    main {
+      width: var(--content);
+      margin: 0 auto;
+      padding: 82px 0 100px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 430px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .route-strip {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      padding: 24px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.035);
+      margin-bottom: 34px;
+    }
+
+    .route-stop {
+      position: relative;
+      flex: 1 0 104px;
+      min-width: 104px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .route-stop::before {
+      content: "";
+      display: block;
+      width: 11px;
+      height: 11px;
+      margin: 0 auto 11px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(242, 184, 75, .13);
+    }
+
+    .route-stop:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: calc(50% + 14px);
+      width: calc(100% - 28px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), rgba(95,208,176,.45));
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .overview-card {
+      padding: 20px;
+      min-height: 170px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(150deg, rgba(255,255,255,.065), rgba(255,255,255,.02));
+    }
+
+    .overview-card .date {
+      color: var(--gold-soft);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .overview-card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.08rem;
+      line-height: 1.35;
+    }
+
+    .overview-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .distance {
+      display: inline-flex;
+      margin-top: 15px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(95,208,176,.1);
+      color: var(--jade);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .itinerary {
+      display: grid;
+      gap: 24px;
+      margin-top: 84px;
+    }
+
+    .day-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(7, 26, 45, .78);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 82px;
+    }
+
+    .day-side {
+      padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(95,208,176,.12), transparent 42%),
+        rgba(255,255,255,.025);
+      border-right: 1px solid var(--line);
+    }
+
+    .day-number {
+      color: var(--gold-soft);
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: -.07em;
+    }
+
+    .day-date {
+      margin-top: 22px;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .day-weekday {
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .day-metric {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .day-metric strong {
+      display: block;
+      font-size: 1.5rem;
+    }
+
+    .day-metric span {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .day-main {
+      padding: 30px clamp(24px, 5vw, 52px) 36px;
+    }
+
+    .day-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      color: var(--jade);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .day-main h3 {
+      margin: 8px 0 10px;
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      letter-spacing: -.04em;
+      line-height: 1.12;
+    }
+
+    .route-line {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .day-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 22px 0;
+    }
+
+    .tag {
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 999px;
+      color: #d7e3eb;
+      background: rgba(255,255,255,.04);
+      font-size: .8rem;
+    }
+
+    .schedule {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0;
+    }
+
+    .schedule li {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr);
+      gap: 18px;
+      padding: 13px 0;
+      border-top: 1px dashed rgba(255,255,255,.12);
+    }
+
+    .schedule time {
+      color: var(--gold-soft);
+      font-weight: 850;
+    }
+
+    .schedule span { color: #d7e3eb; }
+
+    .callout {
+      margin-top: 24px;
+      padding: 17px 18px;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      background: rgba(242,184,75,.09);
+      color: #f7e9c8;
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: rgba(255,138,117,.08);
+      color: #ffd9d1;
+    }
+
+    .day-details[hidden] { display: none; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .detail-box {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .detail-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--sky);
+    }
+
+    .detail-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .toggle-details {
+      margin-top: 22px;
+      border: 0;
+      padding: 0;
+      color: var(--gold-soft);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .support-section {
+      margin-top: 90px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .support-card {
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      color: var(--paper-ink);
+      min-height: 250px;
+    }
+
+    .support-card.accent {
+      background: var(--gold);
+    }
+
+    .support-card.dark {
+      color: var(--ink);
+      background: #0f3049;
+      border: 1px solid var(--line);
+    }
+
+    .support-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+      line-height: 1.2;
+    }
+
+    .support-card ul {
+      margin: 0;
+      padding-left: 1.15rem;
+    }
+
+    .support-card li + li { margin-top: 8px; }
+
+    .weather-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .weather-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.035);
+    }
+
+    .weather-icon { font-size: 2rem; }
+
+    .weather-card h3 { margin: 12px 0 8px; }
+
+    .weather-card p { margin: 0; color: var(--muted); }
+
+    .weather-card strong { color: var(--gold-soft); }
+
+    .footer {
+      padding: 34px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      width: var(--content);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .top-button {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 40;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
+      color: var(--ink);
+      background: rgba(7,26,45,.88);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .top-button.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    @media (max-width: 900px) {
+      .stats,
+      .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-heading { grid-template-columns: 1fr; align-items: start; }
+      .day-card { grid-template-columns: 170px minmax(0, 1fr); }
+      .support-grid, .weather-tabs { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --content: min(100% - 22px, 1160px); }
+      .site-header { min-height: auto; padding: 58px 0 100px; }
+      h1 { font-size: clamp(3rem, 16vw, 4.7rem); }
+      .hero-copy { font-size: 1rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat { padding: 16px; }
+      main { padding-top: 56px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .overview-card { min-height: 0; }
+      .day-card { display: block; border-radius: 22px; }
+      .day-side {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        align-items: center;
+        padding: 20px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .day-number { font-size: 3rem; }
+      .day-date { margin-top: 0; }
+      .day-metric { margin-top: 0; padding-top: 0; border-top: 0; text-align: right; }
+      .day-metric strong { font-size: 1.1rem; }
+      .day-main { padding: 24px 20px 28px; }
+      .schedule li { grid-template-columns: 76px minmax(0, 1fr); gap: 12px; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .footer-inner { display: block; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+
+    @media print {
+      :root { --content: 100%; }
+      body { color: #111; background: #fff; font-size: 10.5pt; }
+      .site-header { min-height: 0; padding: 24px 0; color: #111; border-bottom: 2px solid #111; }
+      .site-header::before, .site-header::after, .date-nav, .hero-actions, .top-button, .toggle-details { display: none !important; }
+      h1 { font-size: 34pt; letter-spacing: -.04em; }
+      h1 span { color: #111; -webkit-text-stroke: 0; }
+      .hero-copy, .stat span, .route-line, .section-heading p, .day-weekday, .schedule span, .detail-box p { color: #444; }
+      .stats { margin-top: 20px; }
+      .stat { color: #111; border: 1px solid #bbb; background: #fff; }
+      .stat strong, .eyebrow, .overview-card .date, .schedule time, .day-number, .day-kicker { color: #111; }
+      main { padding: 24px 0; }
+      .route-strip, .overview-card, .day-card, .weather-card { color: #111; background: #fff; border: 1px solid #bbb; box-shadow: none; }
+      .day-card { display: block; break-inside: avoid; margin-bottom: 14px; }
+      .day-side { display: flex; gap: 18px; align-items: center; padding: 14px 18px; color: #111; border: 0; border-bottom: 1px solid #bbb; background: #f3f3f3; }
+      .day-date { margin: 0; }
+      .day-metric { margin: 0 0 0 auto; padding: 0; border: 0; }
+      .day-main { padding: 18px; }
+      .tag, .distance { color: #111; border: 1px solid #aaa; background: #fff; }
+      .day-details[hidden] { display: block; }
+      .callout, .callout.danger { color: #111; background: #f6f6f6; border-left-color: #111; }
+      .support-card, .support-card.dark, .support-card.accent { color: #111; background: #fff; border: 1px solid #aaa; break-inside: avoid; }
+      .footer { color: #444; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到行程正文</a>
+
+  <header class="site-header" id="top">
+    <div class="hero">
+      <p class="eyebrow">2026 Golden Week Road Trip</p>
+      <h1>穿过峡江与群山<span>武汉 · 宜昌 · 神农架 · 八面山</span></h1>
+      <p class="hero-copy">9月30日14:00武汉出发，沿G348进入西陵峡，经神农顶、大九湖与三峡之巅，最终在八面山看日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#overview">查看行程总览 ↓</a>
+        <button class="button" type="button" data-action="print">打印 / 保存 PDF</button>
+      </div>
+      <div class="stats" aria-label="行程关键数据">
+        <div class="stat"><strong>8天7晚</strong><span>2026.09.30—10.07</span></div>
+        <div class="stat"><strong>≈2330 km</strong><span>实际导航可能浮动 5%—10%</span></div>
+        <div class="stat"><strong>7处核心</strong><span>峡江、公路、森林与高山</span></div>
+        <div class="stat"><strong>2名司机</strong><span>10月5—6日强烈建议轮换</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="date-nav" aria-label="按日期跳转">
+    <div class="date-nav-inner">
+      <a href="#day-1">9.30 宜昌</a>
+      <a href="#day-2">10.1 秭归</a>
+      <a href="#day-3">10.2 木鱼</a>
+      <a href="#day-4">10.3 坪阡</a>
+      <a href="#day-5">10.4 兴隆</a>
+      <a href="#day-6">10.5 八面山</a>
+      <a href="#day-7">10.6 醴陵</a>
+      <a href="#day-8">10.7 武汉</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="section-heading">
+        <h2 id="overview-title">一条不回头的山峡环线</h2>
+        <p>里程按指定途经点规划，不包含大九湖内部换乘车。节假日导航可能因施工、限流和拥堵临时改线。</p>
+      </div>
+
+      <div class="route-strip" aria-label="核心路线">
+        <div class="route-stop">武汉</div>
+        <div class="route-stop">宜昌</div>
+        <div class="route-stop">秭归</div>
+        <div class="route-stop">木鱼</div>
+        <div class="route-stop">坪阡</div>
+        <div class="route-stop">三峡之巅</div>
+        <div class="route-stop">八面山</div>
+        <div class="route-stop">醴陵</div>
+        <div class="route-stop">武汉</div>
+      </div>
+
+      <div class="overview-grid">
+        <div class="overview-card"><span class="date">DAY 01 · 9月30日</span><h3>武汉 → 宜昌</h3><p>下午出发，晚上游船与夜市。</p><span class="distance">320公里</span></div>
+        <div class="overview-card"><span class="date">DAY 02 · 10月1日</span><h3>G348 → 芝茅公路</h3><p>峡江景观公路，夜宿秭归。</p><span class="distance">140公里</span></div>
+        <div class="overview-card"><span class="date">DAY 03 · 10月2日</span><h3>西陵峡 → 木鱼</h3><p>牛肝马肺峡、兵书宝剑峡。</p><span class="distance">190公里</span></div>
+        <div class="overview-card"><span class="date">DAY 04 · 10月3日</span><h3>神农顶 → 坪阡</h3><p>全天穿越神农顶景区。</p><span class="distance">90公里</span></div>
+        <div class="overview-card"><span class="date">DAY 05 · 10月4日</span><h3>大九湖 → 三峡之巅</h3><p>两处精华游，夜宿兴隆镇。</p><span class="distance">180公里</span></div>
+        <div class="overview-card"><span class="date">DAY 06 · 10月5日</span><h3>兴隆 → 八面山</h3><p>长途转场，赶上山顶日落。</p><span class="distance">380公里</span></div>
+        <div class="overview-card"><span class="date">DAY 07 · 10月6日</span><h3>八面山 → 醴陵</h3><p>日出后直接长途返程。</p><span class="distance">620公里</span></div>
+        <div class="overview-card"><span class="date">DAY 08 · 10月7日</span><h3>醴陵 → 武汉</h3><p>避开午后返程高峰。</p><span class="distance">410公里</span></div>
+      </div>
+    </section>
+
+    <section class="itinerary" aria-label="每日详细行程">
+      <article class="day-card" id="day-1" data-day>
+        <aside class="day-side"><div class="day-number">01</div><div><div class="day-date">9月30日</div><div class="day-weekday">星期三</div></div><div class="day-metric"><strong>320公里</strong><span>约4小时</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">武汉 → 宜昌 · 城市夜游</div>
+          <h3>下午出发，把宜昌的夜留给长江</h3>
+          <p class="route-line">武汉市区 → G50沪渝高速 → 潜江 → 荆州 → 枝江 → 宜昌沿江区域</p>
+          <div class="day-tags"><span class="tag">14:00准时出发</span><span class="tag">游船优先</span><span class="tag">酒店必须有停车场</span></div>
+          <ol class="schedule">
+            <li><time>14:00</time><span><strong>14:00 武汉出发</strong>，出发前在武汉加满油或充满电。</span></li>
+            <li><time>16:00</time><span>荆州或潜江服务区短休，不安排正式午餐停留。</span></li>
+            <li><time>18:00</time><span><strong>18:00 抵达宜昌</strong>，直接入住沿江大道或解放路附近酒店。</span></li>
+            <li><time>18:30</time><span>酒店附近快速晚餐；先以已预订游船的登船时间倒推安排。</span></li>
+            <li><time>19:30</time><span>前往码头乘坐长江夜游，实际航次以出票通知为准。</span></li>
+            <li><time>21:30</time><span>游船结束后前往陶珠路或解放路夜市，约22:30返回酒店。</span></li>
+          </ol>
+          <div class="callout danger"><strong>今晚优先级：</strong>游船 ＞ 晚餐完整度 ＞ 夜市。若高速堵车导致19:00后才到宜昌，直接联系游船确认，并把夜市改为纯夜宵。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿与驾驶提示</button>
+          <div class="day-details" hidden>
+            <div class="detail-grid"><div class="detail-box"><strong>住宿：宜昌沿江区域</strong><p>选择独立停车场、24小时前台，避免把车开进步行街核心区。</p></div><div class="detail-box"><strong>驾驶</strong><p>正常不堵约4小时，计划仍给服务区短休和进城停车留出余量。</p></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-2" data-day>
+        <aside class="day-side"><div class="day-number">02</div><div><div class="day-date">10月1日</div><div class="day-weekday">星期四</div></div><div class="day-metric"><strong>140公里</strong><span>边走边玩</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">宜昌 → G348 → 芝茅公路 → 秭归</div>
+          <h3>沿着西陵峡，把一天交给景观公路</h3>
+          <p class="route-line">宜昌 → 三游洞附近 → G348 → 听风谷 → 明月台 → 0.618服务区 → 莲沱畔 → 芝茅公路 → 秭归茅坪</p>
+          <div class="day-tags"><span class="tag">选3—4个停车点</span><span class="tag">不在车道停车</span><span class="tag">夜宿秭归</span></div>
+          <ol class="schedule">
+            <li><time>07:30</time><span>退房，08:00左右进入G348。</span></li>
+            <li><time>08:30</time><span>沿途观景，热门停车点满位就继续前行，不排长队。</span></li>
+            <li><time>12:00</time><span>服务区或三斗坪方向午餐。</span></li>
+            <li><time>13:00</time><span>继续芝茅公路，控制停车次数，17:30前结束主要山路游览。</span></li>
+            <li><time>18:40</time><span>在正规观景平台看晚霞和星空，20:20左右结束。</span></li>
+            <li><time>21:30</time><span>抵达秭归茅坪酒店。</span></li>
+          </ol>
+          <div class="callout"><strong>观星策略：</strong>10月1日月光偏强，以亮星、星座和峡谷夜色为主。如果观景点距离酒店超过1小时，提前结束，不安排疲劳夜驾。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开雨天与住宿提示</button>
+          <div class="day-details" hidden>
+            <div class="detail-grid"><div class="detail-box"><strong>住宿：秭归茅坪</strong><p>住新城，靠近次日出城方向，不住芝茅公路深处。</p></div><div class="detail-box"><strong>小雨切换</strong><p>改走宜昌→三峡人家→秭归，约110—130公里，取消观星。</p></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-3" data-day>
+        <aside class="day-side"><div class="day-number">03</div><div><div class="day-date">10月2日</div><div class="day-weekday">星期五</div></div><div class="day-metric"><strong>190公里</strong><span>约5—6.5小时</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">秭归 → 西陵峡上段 → 木鱼镇</div>
+          <h3>穿过峡谷，进入神农架森林腹地</h3>
+          <p class="route-line">秭归茅坪 → 屈原镇 → 牛肝马肺峡 → 兵书宝剑峡 → 香溪河口 → 兴山 → 昭君镇 → 古昭公路 → 木鱼镇</p>
+          <div class="day-tags"><span class="tag">峡谷远观</span><span class="tag">古昭公路</span><span class="tag">不赶夜路</span></div>
+          <ol class="schedule">
+            <li><time>07:30</time><span>从秭归出发，沿G348进入峡谷段。</span></li>
+            <li><time>09:00</time><span>牛肝马肺峡、兵书宝剑峡正规平台短停拍照。</span></li>
+            <li><time>12:00</time><span>兴山方向午餐并补充饮水。</span></li>
+            <li><time>13:00</time><span>经古昭公路前往木鱼镇。</span></li>
+            <li><time>16:00</time><span>入住木鱼镇；若体力允许，仅安排香溪源或神农坛轻量游览。</span></li>
+            <li><time>18:00</time><span>晚餐后准备次日保暖衣物和景区补给。</span></li>
+          </ol>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿与取舍</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>住宿：木鱼镇</strong><p>主街外围、带独立停车场，避免核心街区堵车。</p></div><div class="detail-box"><strong>景点取舍</strong><p>下午到达较晚时不加景点，保证10月3日睡眠和体力。</p></div></div></div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-4" data-day>
+        <aside class="day-side"><div class="day-number">04</div><div><div class="day-date">10月3日</div><div class="day-weekday">星期六</div></div><div class="day-metric"><strong>90公里</strong><span>景区内全天</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">木鱼 → 神农顶 → 坪阡古镇</div>
+          <h3>从森林到高山草甸，一路向西穿越</h3>
+          <p class="route-line">木鱼 → 小龙潭 → 金猴岭 → 神农谷 → 瞭望塔 → 板壁岩 → 太子垭 → 坪阡古镇</p>
+          <div class="day-tags"><span class="tag">神农谷量力而行</span><span class="tag">天气变化快</span><span class="tag">天黑前到坪阡</span></div>
+          <ol class="schedule">
+            <li><time>06:30</time><span>早餐、退房，07:00进入神农顶方向。</span></li>
+            <li><time>08:00</time><span>小龙潭、金猴岭。</span></li>
+            <li><time>10:00</time><span>神农谷，根据排队、天气和体力决定步行长度。</span></li>
+            <li><time>13:30</time><span>瞭望塔、板壁岩和沿途观景台。</span></li>
+            <li><time>16:30</time><span>必须开始前往坪阡，避免神农顶夜间山路。</span></li>
+            <li><time>18:00</time><span>入住坪阡，确认次日大九湖首班换乘。</span></li>
+          </ol>
+          <div class="callout danger"><strong>硬截止：</strong>无论还有几个景点没看，16:30都开始驶向坪阡。雾大时板壁岩优先于完整神农谷徒步。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿与装备</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>住宿：坪阡古镇</strong><p>距离大九湖换乘中心越近越好，要求提供早饭打包。</p></div><div class="detail-box"><strong>装备</strong><p>抓绒或薄羽绒、防风外套、防滑鞋、雨衣和热水。</p></div></div></div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-5" data-day>
+        <aside class="day-side"><div class="day-number">05</div><div><div class="day-date">10月4日</div><div class="day-weekday">星期日</div></div><div class="day-metric"><strong>180公里</strong><span>双景区精华游</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">大九湖 → 三峡之巅 → 兴隆镇</div>
+          <h3>晨雾之后，站到瞿塘峡最高处</h3>
+          <p class="route-line">坪阡 → 大九湖 → 下谷坪方向 → 大昌方向 → 三峡之巅游客中心 → 奉节兴隆镇</p>
+          <div class="day-tags"><span class="tag">大九湖精华3小时</span><span class="tag">索道/观光车</span><span class="tag">不下山住奉节县城</span></div>
+          <ol class="schedule">
+            <li><time>05:30</time><span>起床退房，06:00到换乘中心。</span></li>
+            <li><time>06:30</time><span>大九湖首批入园，重点游2—6号湖和鹿苑。</span></li>
+            <li><time>10:00</time><span>必须离开大九湖，直接前往三峡之巅。</span></li>
+            <li><time>14:30</time><span>争取抵达游客中心，使用观光车或索道上山。</span></li>
+            <li><time>15:00</time><span>游览夔门、瞿塘峡俯瞰和山顶核心观景点。</span></li>
+            <li><time>18:00</time><span>下山，前往兴隆镇住宿。</span></li>
+          </ol>
+          <div class="callout danger"><strong>硬截止：</strong>10:00必须离开大九湖。若15:30仍未到三峡之巅，改为附近住宿、10月5日开门后游览，接受八面山晚到。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿与路线逻辑</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>住宿：奉节兴隆镇</strong><p>避免先下到奉节县城、第二天再折返南下，节省山路时间。</p></div><div class="detail-box"><strong>三峡之巅</strong><p>只走观光车/索道和山顶短线，不安排白帝城至山顶长线徒步。</p></div></div></div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-6" data-day>
+        <aside class="day-side"><div class="day-number">06</div><div><div class="day-date">10月5日</div><div class="day-weekday">星期一</div></div><div class="day-metric"><strong>380公里</strong><span>约7—9小时</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">兴隆镇 → 八面山</div>
+          <h3>长途穿行，只为在山顶住一晚</h3>
+          <p class="route-line">兴隆镇 → 建始方向 → 恩施外围过境 → 来凤 → 龙山 → 里耶 → 八面山</p>
+          <div class="day-tags"><span class="tag">不进恩施市区</span><span class="tag">两名司机轮换</span><span class="tag">山顶住宿</span></div>
+          <ol class="schedule">
+            <li><time>06:30</time><span>从兴隆镇出发，严格服从实时导航与道路管制。</span></li>
+            <li><time>09:00</time><span>建始方向短休，检查胎压和剩余续航。</span></li>
+            <li><time>12:00</time><span>来凤或龙山方向午餐，控制在45分钟以内。</span></li>
+            <li><time>15:00</time><span>力争抵达八面山，先办理入住。</span></li>
+            <li><time>16:00</time><span>大岩门草原、杯子岩和最近的绝壁观景点。</span></li>
+            <li><time>18:00</time><span>看日落；晚餐后视天气在住宿附近观星。</span></li>
+          </ol>
+          <div class="callout"><strong>道路提醒：</strong>不要把奉节至建始按已全线通车的高速计算。国庆前再次核对施工与省道管制，导航出现施工便道时立即改线。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿选择</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>住宿：八面山景区内</strong><p>优先星空云舍、悬崖酒店或房车住宿，确认车辆能否到客房附近。</p></div><div class="detail-box"><strong>晚到取舍</strong><p>16:30后才到就只看住宿附近草原和日落，不跑完整景区。</p></div></div></div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-7" data-day>
+        <aside class="day-side"><div class="day-number">07</div><div><div class="day-date">10月6日</div><div class="day-weekday">星期二</div></div><div class="day-metric"><strong>620公里</strong><span>约9—11小时</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">八面山 → 醴陵</div>
+          <h3>看完日出，开始全程最长的一次转场</h3>
+          <p class="route-line">八面山 → 里耶 → 龙山 → 张家界方向 → 常德方向 → 长沙绕城 → 醴陵</p>
+          <div class="day-tags"><span class="tag">08:30前离山</span><span class="tag">不增加景点</span><span class="tag">司机轮换</span></div>
+          <ol class="schedule">
+            <li><time>05:30</time><span>起床，步行或短途开车前往酒店推荐的日出点。</span></li>
+            <li><time>06:00</time><span>等待日出和云海；具体时间前一天询问酒店。</span></li>
+            <li><time>07:30</time><span>早餐、退房。</span></li>
+            <li><time>08:30</time><span>最晚离开八面山，直接前往醴陵。</span></li>
+            <li><time>12:30</time><span>服务区午餐和换司机。</span></li>
+            <li><time>18:30</time><span>预计18:30—20:30抵达醴陵，入住后简单晚餐。</span></li>
+          </ol>
+          <div class="callout danger"><strong>当天禁止加点：</strong>不进入里耶古城、张家界或长沙市区。若没有日出或天气恶劣，07:30前下山。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开住宿与驾驶安排</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>住宿：醴陵</strong><p>选择高速入口或一江两岸附近、有停车场的酒店。</p></div><div class="detail-box"><strong>轮换建议</strong><p>每2小时左右换司机；单司机不建议执行八面山到醴陵直达方案。</p></div></div></div>
+        </div>
+      </article>
+
+      <article class="day-card" id="day-8" data-day>
+        <aside class="day-side"><div class="day-number">08</div><div><div class="day-date">10月7日</div><div class="day-weekday">星期三</div></div><div class="day-metric"><strong>410公里</strong><span>约5—7小时</span></div></aside>
+        <div class="day-main">
+          <div class="day-kicker">醴陵 → 武汉 · 返程</div>
+          <h3>不再加景点，避开下午返程高峰</h3>
+          <p class="route-line">醴陵 → 长沙绕城方向 → 京港澳高速或武深高速 → 武汉</p>
+          <div class="day-tags"><span class="tag">08:30前出发</span><span class="tag">实时二选一</span><span class="tag">15:00前进武汉</span></div>
+          <ol class="schedule">
+            <li><time>07:30</time><span>早餐，检查车辆和行李。</span></li>
+            <li><time>08:00</time><span>退房；根据导航选择京港澳或武深高速。</span></li>
+            <li><time>11:00</time><span>服务区休息一次。</span></li>
+            <li><time>12:30</time><span>途中午餐，避免进入大城市核心区。</span></li>
+            <li><time>14:00</time><span>争取14:00—16:00进入武汉城区。</span></li>
+          </ol>
+          <div class="callout"><strong>返程原则：</strong>不安排醴陵陶瓷谷完整游览。如需采购陶瓷，只在酒店附近快速购买。</div>
+          <button class="toggle-details" type="button" aria-expanded="false">展开路线选择</button>
+          <div class="day-details" hidden><div class="detail-grid"><div class="detail-box"><strong>京港澳高速</strong><p>路线直观，但长沙和岳阳方向可能拥堵。</p></div><div class="detail-box"><strong>武深高速</strong><p>根据当天拥堵情况作为备选，不提前锁死路线。</p></div></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="support-section" aria-labelledby="weather-title">
+      <div class="section-heading"><h2 id="weather-title">雨天替代方案</h2><p>山路旅行不与天气硬碰。以下切换只改变10月1—2日，后续大框架尽量保持。</p></div>
+      <div class="weather-tabs">
+        <div class="weather-card"><div class="weather-icon" aria-hidden="true">☀️</div><h3>晴天</h3><p><strong>宜昌→G348→芝茅公路→秭归</strong><br>约140公里，保留晚霞和短时观星。</p></div>
+        <div class="weather-card"><div class="weather-icon" aria-hidden="true">🌦️</div><h3>小雨</h3><p><strong>宜昌→三峡人家→秭归</strong><br>约110—130公里，取消芝茅路观星，10月2日恢复原计划。</p></div>
+        <div class="weather-card"><div class="weather-icon" aria-hidden="true">⛈️</div><h3>中到大雨</h3><p><strong>取消临崖县道与观景点</strong><br>走安全主干道前往兴山或木鱼，并接受跳过部分峡谷景观。</p></div>
+      </div>
+    </section>
+
+    <section class="support-section" aria-labelledby="checklist-title">
+      <div class="section-heading"><h2 id="checklist-title">出发前的三张清单</h2><p>国庆山区自驾，预订、车辆和保暖装备比临时增加景点更重要。</p></div>
+      <div class="support-grid">
+        <div class="support-card accent"><h3>必须提前预订</h3><ul><li>9月30日宜昌夜游航次</li><li>坪阡大九湖首批换乘</li><li>三峡之巅下午入园时段</li><li>八面山景区内住宿与停车</li><li>所有酒店的国庆取消政策</li></ul></div>
+        <div class="support-card"><h3>车辆检查</h3><ul><li>轮胎、刹车、玻璃水与冷却液</li><li>充气泵、补胎工具、应急电源</li><li>进入山区前加满油或充满电</li><li>下载湖北、重庆、湖南离线地图</li><li>准备一天饮水和简单食品</li></ul></div>
+        <div class="support-card dark"><h3>穿着与安全</h3><ul><li>薄羽绒或抓绒＋防风外套</li><li>防滑鞋、雨衣、手电和充电宝</li><li>不在行车道、隧道口停车拍照</li><li>神农顶、八面山不疲劳夜驾</li><li>连续长途日由两位司机轮换</li></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner"><span>2026 国庆自驾计划 · 最后更新 2026-08-20</span><span>里程为规划值，出发前48小时复核天气、道路与景区公告。</span></div>
+  </footer>
+
+  <button class="top-button" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
+
+  <script>
+    const detailButtons = document.querySelectorAll(".toggle-details");
+    const printButton = document.querySelector('[data-action="print"]');
+    const topButton = document.querySelector(".top-button");
+
+    detailButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const details = button.nextElementSibling;
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        details.hidden = isExpanded;
+        button.textContent = isExpanded ? button.textContent.replace("收起", "展开") : button.textContent.replace("展开", "收起");
+      });
+    });
+
+    printButton.addEventListener("click", () => window.print());
+
+    window.addEventListener("scroll", () => {
+      topButton.classList.toggle("visible", window.scrollY > 700);
+    }, { passive: true });
+
+    topButton.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
