@@ -34,14 +34,15 @@ try {
   check("包含雨天替代方案", html.includes("雨天替代方案"));
   check("包含减少动态效果支持", html.includes("prefers-reduced-motion"));
 
-  if (await fileExists("README.md")) {
+  const readmeExists = await fileExists("README.md");
+  check("存在README", readmeExists);
+  if (readmeExists) {
     const readme = await readFile("README.md", "utf8");
     check("README包含本地预览命令", readme.includes("python3 -m http.server 8000"));
+    check("README包含GitHub Pages说明", readme.includes("GitHub Pages"));
   }
 
-  if (await fileExists(".nojekyll")) {
-    check("存在.nojekyll", true);
-  }
+  check("存在.nojekyll", await fileExists(".nojekyll"));
 
   check("无不安全HTTP资源", !/\b(?:src|href)=["']http:\/\//.test(html));
 
