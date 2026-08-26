@@ -35,6 +35,11 @@ try {
   check("包含秭归单间价格", html.includes("¥399/间"));
   check("包含秭归两间合计", html.includes("¥798"));
   check("包含两晚住宿合计", html.includes("¥1,238"));
+  check("包含记账单模块", html.includes('id="expenses"') && html.includes("此行记账单"));
+  check("记账单预填两笔住宿", html.includes("丽橙酒店·智（宜昌火车东站五一广场店）") && html.includes("秭归若兮酒店"));
+  check("记账单包含新增按钮", html.includes('id="add-expense"'));
+  check("记账单包含自动保存逻辑", html.includes("wuhan-yichang-roadtrip-expenses-v1") && html.includes("localStorage.setItem"));
+  check("记账单包含四人均摊", html.includes("expense-per-person") && html.includes("total / 4"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
   check("10月5日住宿八面山", html.includes("住宿：八面山景区内"));
   check("不包含芙蓉镇行程", !html.includes("前往芙蓉镇") && !html.includes("住宿芙蓉镇"));
