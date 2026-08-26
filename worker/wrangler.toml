@@ -1,0 +1,10 @@
+name = "wuhan-yichang-expense-api"
+main = "src/index.js"
+compatibility_date = "2026-08-26"
+
+[vars]
+GITHUB_OWNER = "storm-CC"
+GITHUB_REPO = "wuhan-yichang-roadtrip-2026"
+GITHUB_BRANCH = "main"
+GITHUB_PATH = "data/expenses.json"
+ALLOWED_ORIGINS = "https://storm-cc.github.io"

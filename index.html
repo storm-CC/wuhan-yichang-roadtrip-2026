@@ -834,6 +834,15 @@
       font-size: .78rem;
     }
 
+    .expense-sync-status {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .expense-sync-status[data-state="success"] { color: var(--jade); }
+    .expense-sync-status[data-state="pending"] { color: var(--gold-soft); }
+    .expense-sync-status[data-state="error"] { color: var(--danger); }
+
     .footer {
       padding: 34px 0 48px;
       border-top: 1px solid var(--line);
@@ -1043,7 +1052,7 @@
     <section class="expense-section" id="expenses" aria-labelledby="expense-title">
       <div class="section-heading"><h2 id="expense-title">旅行记账单</h2><p>记录全车共同花销，金额按4人均摊；已预填两笔已确认住宿。</p></div>
       <div class="expense-card">
-        <p class="expense-note">可以填写餐饮、门票、充电、停车和其他费用。修改后会自动保存到当前浏览器，不会上传到服务器。</p>
+        <p class="expense-note">可以填写餐饮、门票、充电、停车和其他费用。连接服务器后，修改会自动同步到 GitHub 仓库，所有人打开网页都能看到最新账单。</p>
         <div class="expense-summary" aria-live="polite">
           <div class="expense-stat"><span>当前总花销</span><strong id="expense-total">¥0</strong></div>
           <div class="expense-stat"><span>4人平均</span><strong id="expense-per-person">¥0</strong></div>
@@ -1053,8 +1062,10 @@
         <div class="expense-list" id="expense-list"></div>
         <div class="expense-actions">
           <button class="button button-primary" type="button" id="add-expense">＋ 添加一笔</button>
+          <button class="button" type="button" id="sync-expenses">立即同步</button>
           <button class="button" type="button" id="reset-expenses">恢复住宿初始记录</button>
-          <span class="expense-storage-note">金额为整车/整桌合计，删除或修改后立即重新计算。</span>
+          <span class="expense-sync-status" id="expense-sync-status" data-state="offline">服务器地址未配置</span>
+          <span class="expense-storage-note">金额为整车/整桌合计，修改后会自动重新计算。</span>
         </div>
       </div>
     </section>
@@ -1256,6 +1267,7 @@
 
   <button class="top-button" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
 
+  <script src="./expense-config.js"></script>
   <script>
     const detailButtons = document.querySelectorAll(".toggle-details");
     const printButton = document.querySelector('[data-action="print"]');
@@ -1265,18 +1277,21 @@
     const expensePerPerson = document.querySelector("#expense-per-person");
     const expenseCount = document.querySelector("#expense-count");
     const addExpenseButton = document.querySelector("#add-expense");
+    const syncExpensesButton = document.querySelector("#sync-expenses");
     const resetExpensesButton = document.querySelector("#reset-expenses");
+    const expenseSyncStatus = document.querySelector("#expense-sync-status");
     const expenseStorageKey = "wuhan-yichang-roadtrip-expenses-v1";
+    const expenseApiUrl = typeof window.EXPENSE_API_URL === "string" ? window.EXPENSE_API_URL.trim() : "";
     const defaultExpenses = [
-      { date: "9月30日", category: "住宿", item: "丽橙酒店·智（宜昌火车东站五一广场店）", amount: 440, payer: "待记录" },
-      { date: "10月1日", category: "住宿", item: "秭归若兮酒店", amount: 798, payer: "待记录" }
+      { id: "stay-yichang", date: "9月30日", category: "住宿", item: "丽橙酒店·智（宜昌火车东站五一广场店）", amount: 440, payer: "待记录" },
+      { id: "stay-zigui", date: "10月1日", category: "住宿", item: "秭归若兮酒店", amount: 798, payer: "待记录" }
     ];
 
     function createExpenseId() {
       return `expense-${Date.now()}-${Math.random().toString(16).slice(2)}`;
     }
 
-    function loadExpenses() {
+    function loadLocalExpenses() {
       try {
         const savedExpenses = JSON.parse(localStorage.getItem(expenseStorageKey));
         return Array.isArray(savedExpenses) ? savedExpenses : defaultExpenses.map((expense) => ({ ...expense, id: createExpenseId() }));
@@ -1285,13 +1300,73 @@
       }
     }
 
-    let expenses = loadExpenses();
+    function setSyncStatus(message, state = "offline") {
+      expenseSyncStatus.textContent = message;
+      expenseSyncStatus.dataset.state = state;
+    }
+
+    async function loadExpenses() {
+      const localExpenses = loadLocalExpenses();
+      if (!expenseApiUrl) {
+        setSyncStatus("服务器地址未配置");
+        return localExpenses;
+      }
+
+      setSyncStatus("正在读取服务器账单…", "pending");
+      try {
+        const response = await fetch(expenseApiUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error(`读取失败（${response.status}）`);
+        const remoteExpenses = await response.json();
+        if (!Array.isArray(remoteExpenses)) throw new Error("服务器返回格式不正确");
+        localStorage.setItem(expenseStorageKey, JSON.stringify(remoteExpenses));
+        setSyncStatus("已从服务器加载", "success");
+        return remoteExpenses;
+      } catch (error) {
+        setSyncStatus(`服务器读取失败，使用本地缓存`, "error");
+        return localExpenses;
+      }
+    }
+
+    let expenses = [];
+    let syncTimer;
 
     function saveExpenses() {
       try {
         localStorage.setItem(expenseStorageKey, JSON.stringify(expenses));
       } catch {
-        return;
+        setSyncStatus("本地缓存不可用", "error");
+      }
+      queueRemoteSync();
+    }
+
+    function queueRemoteSync() {
+      if (!expenseApiUrl) return;
+      clearTimeout(syncTimer);
+      setSyncStatus("等待同步…", "pending");
+      syncTimer = setTimeout(syncExpensesToServer, 700);
+    }
+
+    async function syncExpensesToServer() {
+      if (!expenseApiUrl) {
+        setSyncStatus("服务器地址未配置");
+        return false;
+      }
+      setSyncStatus("正在同步到服务器…", "pending");
+      try {
+        const response = await fetch(expenseApiUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(expenses)
+        });
+        if (!response.ok) {
+          const errorPayload = await response.json().catch(() => ({}));
+          throw new Error(errorPayload.error || `同步失败（${response.status}）`);
+        }
+        setSyncStatus(`已同步 ${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`, "success");
+        return true;
+      } catch (error) {
+        setSyncStatus("同步失败，数据仍保存在本地", "error");
+        return false;
       }
     }
 
@@ -1367,13 +1442,17 @@
     });
 
     addExpenseButton.addEventListener("click", addExpense);
+    syncExpensesButton.addEventListener("click", syncExpensesToServer);
     resetExpensesButton.addEventListener("click", () => {
       expenses = defaultExpenses.map((expense) => ({ ...expense, id: createExpenseId() }));
       saveExpenses();
       renderExpenses();
     });
 
-    renderExpenses();
+    loadExpenses().then((loadedExpenses) => {
+      expenses = loadedExpenses;
+      renderExpenses();
+    });
 
     detailButtons.forEach((button) => {
       button.addEventListener("click", () => {

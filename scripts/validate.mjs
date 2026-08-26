@@ -40,6 +40,7 @@ try {
   check("记账单包含新增按钮", html.includes('id="add-expense"'));
   check("顶部包含记账单入口", html.includes('href="#expenses"') && html.includes("打开记账单"));
   check("记账单包含自动保存逻辑", html.includes("wuhan-yichang-roadtrip-expenses-v1") && html.includes("localStorage.setItem"));
+  check("包含服务器同步逻辑", html.includes("EXPENSE_API_URL") && html.includes("syncExpensesToServer") && html.includes("fetch(expenseApiUrl"));
   check("记账单包含四人均摊", html.includes("expense-per-person") && html.includes("total / 4"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
   check("10月5日住宿八面山", html.includes("住宿：八面山景区内"));
@@ -56,6 +57,10 @@ try {
   }
 
   check("存在.nojekyll", await fileExists(".nojekyll"));
+  check("存在服务器配置文件", await fileExists("expense-config.js"));
+  check("存在服务器账单数据文件", await fileExists("data/expenses.json"));
+  check("存在 Worker 服务代码", await fileExists("worker/src/index.js"));
+  check("存在 Worker 配置文件", await fileExists("worker/wrangler.toml"));
 
   check("无不安全HTTP资源", !/\b(?:src|href)=["']http:\/\//.test(html));
 
