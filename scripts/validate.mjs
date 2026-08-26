@@ -37,11 +37,9 @@ try {
   check("包含两晚住宿合计", html.includes("¥1,238"));
   check("包含记账单模块", html.includes('id="expenses"') && html.includes("旅行记账单"));
   check("记账单预填两笔住宿", html.includes("丽橙酒店·智（宜昌火车东站五一广场店）") && html.includes("秭归若兮酒店"));
-  check("记账单包含新增按钮", html.includes('id="add-expense"'));
   check("顶部包含记账单入口", html.includes('href="#expenses"') && html.includes("打开记账单"));
-  check("记账单包含自动保存逻辑", html.includes("wuhan-yichang-roadtrip-expenses-v1") && html.includes("localStorage.setItem"));
-  check("包含服务器同步逻辑", html.includes("EXPENSE_API_URL") && html.includes("syncExpensesToServer") && html.includes("fetch(expenseApiUrl"));
-  check("记账单包含四人均摊", html.includes("expense-per-person") && html.includes("total / 4"));
+  check("包含腾讯文档账单链接", html.includes("https://docs.qq.com/sheet/DWG5CZHRqcWdwS0Vw?tab=BB08J2"));
+  check("记账单使用网页内嵌表格", html.includes("<iframe class=\"expense-embed\"") && html.includes("2026国庆自驾费用账单"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
   check("10月5日住宿八面山", html.includes("住宿：八面山景区内"));
   check("不包含芙蓉镇行程", !html.includes("前往芙蓉镇") && !html.includes("住宿芙蓉镇"));
@@ -57,10 +55,6 @@ try {
   }
 
   check("存在.nojekyll", await fileExists(".nojekyll"));
-  check("存在服务器配置文件", await fileExists("expense-config.js"));
-  check("存在服务器账单数据文件", await fileExists("data/expenses.json"));
-  check("存在 Worker 服务代码", await fileExists("worker/src/index.js"));
-  check("存在 Worker 配置文件", await fileExists("worker/wrangler.toml"));
 
   check("无不安全HTTP资源", !/\b(?:src|href)=["']http:\/\//.test(html));
 
