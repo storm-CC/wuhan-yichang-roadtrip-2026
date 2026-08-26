@@ -39,7 +39,8 @@ try {
   check("记账单预填两笔住宿", html.includes("丽橙酒店·智（宜昌火车东站五一广场店）") && html.includes("秭归若兮酒店"));
   check("顶部包含记账单入口", html.includes('href="#expenses"') && html.includes("打开记账单"));
   check("包含腾讯文档账单链接", html.includes("https://docs.qq.com/sheet/DWG5CZHRqcWdwS0Vw?tab=BB08J2"));
-  check("记账单使用网页内嵌表格", html.includes("<iframe class=\"expense-embed\"") && html.includes("2026国庆自驾费用账单"));
+  check("记账单使用自制表格", html.includes('id="expense-list"') && html.includes('id="add-expense"') && html.includes('id="sync-expenses"'));
+  check("记账单配置共享接口", html.includes('src="./expense-config.js"') && html.includes("expenseApiUrl"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
   check("10月5日住宿八面山", html.includes("住宿：八面山景区内"));
   check("不包含芙蓉镇行程", !html.includes("前往芙蓉镇") && !html.includes("住宿芙蓉镇"));

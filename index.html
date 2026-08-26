@@ -1101,20 +1101,23 @@
     </section>
 
     <section class="expense-section" id="expenses" aria-labelledby="expense-title">
-      <div class="section-heading"><h2 id="expense-title">旅行记账单</h2><p>腾讯文档在线账单，4个人打开这一个攻略网页即可查看同一份最新记录。</p></div>
+      <div class="section-heading"><h2 id="expense-title">旅行记账单</h2><p>记录全车共同花销，金额按4人均摊；网页账单会同步到服务器，腾讯文档作为备用编辑入口。</p></div>
       <div class="expense-card">
-        <div class="expense-online-head">
-          <div>
-            <span class="expense-online-label">Online ledger · Tencent Docs</span>
-            <h3>实时在线账单</h3>
-            <p>在下方直接查看和编辑；修改会由腾讯文档自动保存。</p>
-          </div>
-          <a class="button button-primary" href="https://docs.qq.com/sheet/DWG5CZHRqcWdwS0Vw?tab=BB08J2" target="_blank" rel="noopener">在腾讯文档中打开 ↗</a>
+        <p class="expense-note">可以填写餐饮、门票、充电、停车和其他费用。修改后会自动同步到共享账单，4个人刷新页面即可看到最新记录。</p>
+        <div class="expense-summary" aria-live="polite">
+          <div class="expense-stat"><span>当前总花销</span><strong id="expense-total">¥0</strong></div>
+          <div class="expense-stat"><span>4人平均</span><strong id="expense-per-person">¥0</strong></div>
+          <div class="expense-stat"><span>已记录笔数</span><strong id="expense-count">0笔</strong></div>
         </div>
-        <div class="expense-embed-frame">
-          <iframe class="expense-embed" src="https://docs.qq.com/sheet/DWG5CZHRqcWdwS0Vw?tab=BB08J2" title="2026国庆自驾费用账单" loading="eager"></iframe>
+        <div class="expense-header" aria-hidden="true"><span>日期</span><span>类别</span><span>项目</span><span>金额（元）</span><span>付款人</span><span></span></div>
+        <div class="expense-list" id="expense-list"></div>
+        <div class="expense-actions">
+          <button class="button button-primary" type="button" id="add-expense">＋ 添加一笔</button>
+          <button class="button" type="button" id="sync-expenses">立即同步</button>
+          <button class="button" type="button" id="reset-expenses">恢复住宿初始记录</button>
+          <a class="button" href="https://docs.qq.com/sheet/DWG5CZHRqcWdwS0Vw?tab=BB08J2" target="_blank" rel="noopener">打开腾讯文档 ↗</a>
+          <span class="expense-sync-status" id="expense-sync-status" data-state="pending">正在读取共享账单…</span>
         </div>
-        <p class="expense-embed-note">如果当前浏览器不显示内嵌表格，请点击上方“在腾讯文档中打开”，进入同一份在线账单。</p>
       </div>
     </section>
 
@@ -1315,10 +1318,207 @@
 
   <button class="top-button" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
 
+  <script src="./expense-config.js"></script>
   <script>
     const detailButtons = document.querySelectorAll(".toggle-details");
     const printButton = document.querySelector('[data-action="print"]');
     const topButton = document.querySelector(".top-button");
+    const expenseList = document.querySelector("#expense-list");
+    const expenseTotal = document.querySelector("#expense-total");
+    const expensePerPerson = document.querySelector("#expense-per-person");
+    const expenseCount = document.querySelector("#expense-count");
+    const addExpenseButton = document.querySelector("#add-expense");
+    const syncExpensesButton = document.querySelector("#sync-expenses");
+    const resetExpensesButton = document.querySelector("#reset-expenses");
+    const syncStatus = document.querySelector("#expense-sync-status");
+    const expenseApiUrl = window.EXPENSE_API_URL || "";
+    const expenseStorageKey = "wuhan-yichang-roadtrip-expenses-v1";
+    const defaultExpenses = [
+      { date: "9月30日", category: "住宿", item: "丽橙酒店·智（宜昌火车东站五一广场店）", amount: 440, payer: "盛琦" },
+      { date: "10月1日", category: "住宿", item: "秭归若兮酒店", amount: 798, payer: "盛琦" }
+    ];
+    const dateOptions = ["9月30日", "10月1日", "10月2日", "10月3日", "10月4日", "10月5日", "10月6日", "10月7日", "其他"];
+    const categoryOptions = ["住宿", "餐饮", "门票", "充电", "停车", "其他"];
+    let expenses = [];
+    let syncTimer;
+    let syncInFlight = false;
+
+    function createExpenseId() {
+      return `expense-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function setSyncStatus(message, state = "") {
+      syncStatus.textContent = message;
+      syncStatus.dataset.state = state;
+    }
+
+    function formatMoney(value) {
+      return `¥${Number(value || 0).toLocaleString("zh-CN", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+    }
+
+    function cloneDefaultExpenses() {
+      return defaultExpenses.map((expense) => ({ ...expense, id: createExpenseId() }));
+    }
+
+    function normalizeExpenses(value) {
+      if (!Array.isArray(value)) return [];
+      return value.map((expense) => ({
+        id: String(expense.id || createExpenseId()),
+        date: dateOptions.includes(expense.date) ? expense.date : "其他",
+        category: categoryOptions.includes(expense.category) ? expense.category : "其他",
+        item: String(expense.item || ""),
+        amount: Number(expense.amount) || 0,
+        payer: String(expense.payer || "")
+      }));
+    }
+
+    function readLocalExpenses() {
+      try {
+        const savedExpenses = JSON.parse(localStorage.getItem(expenseStorageKey));
+        return Array.isArray(savedExpenses) ? normalizeExpenses(savedExpenses) : cloneDefaultExpenses();
+      } catch {
+        return cloneDefaultExpenses();
+      }
+    }
+
+    function saveLocalExpenses() {
+      try {
+        localStorage.setItem(expenseStorageKey, JSON.stringify(expenses));
+      } catch {
+        setSyncStatus("本地缓存不可用", "error");
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function expenseField(label, type, value, expenseId, field, options = []) {
+      const safeValue = escapeHtml(value);
+      if (type === "select") {
+        return `<label class="expense-field"><span class="sr-only">${label}</span><select data-expense-id="${expenseId}" data-expense-field="${field}" aria-label="${label}">${options.map((option) => `<option${option === value ? " selected" : ""}>${option}</option>`).join("")}</select></label>`;
+      }
+      return `<label class="expense-field"><span class="sr-only">${label}</span><input type="${type}" value="${safeValue}" data-expense-id="${expenseId}" data-expense-field="${field}" aria-label="${label}"${type === "number" ? ' min="0" step="0.01" inputmode="decimal"' : ""}></label>`;
+    }
+
+    function updateExpenseSummary() {
+      const total = expenses.reduce((sum, expense) => sum + (Number(expense.amount) || 0), 0);
+      expenseTotal.textContent = formatMoney(total);
+      expensePerPerson.textContent = formatMoney(total / 4);
+      expenseCount.textContent = `${expenses.length}笔`;
+    }
+
+    function renderExpenses() {
+      if (!expenses.length) {
+        expenseList.innerHTML = '<div class="expense-empty">还没有记账记录，点击“添加一笔”开始记录。</div>';
+      } else {
+        expenseList.innerHTML = expenses.map((expense) => `<div class="expense-row" data-expense-row="${expense.id}">
+          ${expenseField("费用日期", "select", expense.date, expense.id, "date", dateOptions)}
+          ${expenseField("费用类别", "select", expense.category, expense.id, "category", categoryOptions)}
+          ${expenseField("费用项目", "text", expense.item, expense.id, "item")}
+          ${expenseField("金额（元）", "number", expense.amount, expense.id, "amount")}
+          ${expenseField("付款人", "text", expense.payer, expense.id, "payer")}
+          <button class="expense-remove" type="button" data-remove-expense="${expense.id}" aria-label="删除这笔费用">×</button>
+        </div>`).join("");
+      }
+      updateExpenseSummary();
+    }
+
+    function queueRemoteSync() {
+      clearTimeout(syncTimer);
+      setSyncStatus("等待同步…", "pending");
+      syncTimer = setTimeout(syncExpensesToServer, 700);
+    }
+
+    async function loadExpensesFromServer() {
+      if (!expenseApiUrl) {
+        expenses = readLocalExpenses();
+        setSyncStatus("服务器地址未配置，使用本地记录", "error");
+        renderExpenses();
+        return;
+      }
+      try {
+        const response = await fetch(expenseApiUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error(`读取失败（${response.status}）`);
+        const payload = await response.json();
+        expenses = normalizeExpenses(payload.expenses ?? payload);
+        saveLocalExpenses();
+        setSyncStatus(`已读取共享账单 · ${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`, "success");
+      } catch {
+        expenses = readLocalExpenses();
+        setSyncStatus("服务器读取失败，使用本地记录", "error");
+      }
+      renderExpenses();
+    }
+
+    async function syncExpensesToServer() {
+      saveLocalExpenses();
+      if (!expenseApiUrl || syncInFlight) return false;
+      syncInFlight = true;
+      setSyncStatus("正在同步到共享账单…", "pending");
+      try {
+        const response = await fetch(expenseApiUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(expenses)
+        });
+        if (!response.ok) {
+          const payload = await response.json().catch(() => ({}));
+          throw new Error(payload.error || `同步失败（${response.status}）`);
+        }
+        setSyncStatus(`已同步共享账单 · ${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`, "success");
+        return true;
+      } catch {
+        setSyncStatus("同步失败，数据仍保存在本地", "error");
+        return false;
+      } finally {
+        syncInFlight = false;
+      }
+    }
+
+    function updateExpenseField(field) {
+      const expense = expenses.find((item) => item.id === field.dataset.expenseId);
+      if (!expense) return;
+      expense[field.dataset.expenseField] = field.dataset.expenseField === "amount" ? Number(field.value) || 0 : field.value;
+      saveLocalExpenses();
+      updateExpenseSummary();
+      queueRemoteSync();
+    }
+
+    function addExpense() {
+      expenses.push({ id: createExpenseId(), date: "10月2日", category: "餐饮", item: "", amount: 0, payer: "" });
+      renderExpenses();
+      queueRemoteSync();
+      expenseList.querySelector(`[data-expense-row="${expenses.at(-1).id}"] input[data-expense-field="item"]`)?.focus();
+    }
+
+    expenseList.addEventListener("input", (event) => {
+      const field = event.target.closest("[data-expense-field]");
+      if (field) updateExpenseField(field);
+    });
+
+    expenseList.addEventListener("change", (event) => {
+      const field = event.target.closest("[data-expense-field]");
+      if (field) updateExpenseField(field);
+    });
+
+    expenseList.addEventListener("click", (event) => {
+      const removeButton = event.target.closest("[data-remove-expense]");
+      if (!removeButton) return;
+      expenses = expenses.filter((expense) => expense.id !== removeButton.dataset.removeExpense);
+      renderExpenses();
+      queueRemoteSync();
+    });
+
+    addExpenseButton.addEventListener("click", addExpense);
+    syncExpensesButton.addEventListener("click", syncExpensesToServer);
+    resetExpensesButton.addEventListener("click", () => {
+      expenses = cloneDefaultExpenses();
+      renderExpenses();
+      queueRemoteSync();
+    });
+
+    loadExpensesFromServer();
 
     detailButtons.forEach((button) => {
       button.addEventListener("click", () => {
