@@ -277,6 +277,15 @@
       background: rgba(255,255,255,.08);
     }
 
+    .date-nav a.expense-link {
+      color: var(--gold-soft);
+      background: rgba(242,184,75,.1);
+    }
+
+    #expenses {
+      scroll-margin-top: 28px;
+    }
+
     main {
       width: var(--content);
       margin: 0 auto;
@@ -968,6 +977,7 @@
       <p class="hero-copy">9月30日14:00武汉出发，沿G348进入西陵峡，经神农顶、大九湖与三峡之巅，最终在八面山看日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#overview">查看行程总览 ↓</a>
+        <a class="button" href="#expenses">打开记账单 ↓</a>
         <button class="button" type="button" data-action="print">打印 / 保存 PDF</button>
       </div>
       <div class="stats" aria-label="行程关键数据">
@@ -981,6 +991,7 @@
 
   <nav class="date-nav" aria-label="按日期跳转">
     <div class="date-nav-inner">
+      <a class="expense-link" href="#expenses">记账单</a>
       <a href="#day-1">9.30 宜昌</a>
       <a href="#day-2">10.1 秭归</a>
       <a href="#day-3">10.2 木鱼</a>
@@ -1030,7 +1041,7 @@
     </section>
 
     <section class="expense-section" id="expenses" aria-labelledby="expense-title">
-      <div class="section-heading"><h2 id="expense-title">此行记账单</h2><p>记录全车共同花销，金额按4人均摊；已预填两笔已确认住宿。</p></div>
+      <div class="section-heading"><h2 id="expense-title">旅行记账单</h2><p>记录全车共同花销，金额按4人均摊；已预填两笔已确认住宿。</p></div>
       <div class="expense-card">
         <p class="expense-note">可以填写餐饮、门票、充电、停车和其他费用。修改后会自动保存到当前浏览器，不会上传到服务器。</p>
         <div class="expense-summary" aria-live="polite">
