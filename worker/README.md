@@ -4,15 +4,19 @@
 
 ## 部署
 
-在 Cloudflare 创建账号后，安装 Wrangler 并登录：
+在 Cloudflare 创建账号后，先切换到 Node.js 22 或更高版本，再在 Worker 项目内安装 Wrangler：
 
 ```bash
-npm install -g wrangler
-wrangler login
+nvm install 22
+nvm use 22
 cd worker
-wrangler secret put GITHUB_TOKEN
-wrangler deploy
+npm install -D wrangler@latest
+npx wrangler login
+npx wrangler secret put GITHUB_TOKEN
+npx wrangler deploy
 ```
+
+如果终端提示 `nvm: command not found`，先安装 nvm，重新打开终端后再执行上面的命令。也可以使用 Node.js 官网的 macOS 安装包，安装 Node.js 22 或更高版本。
 
 `GITHUB_TOKEN` 需要能够对 `storm-CC/wuhan-yichang-roadtrip-2026` 仓库读写 Contents。不要把 Token 写进网页或提交到 Git 仓库。
 
