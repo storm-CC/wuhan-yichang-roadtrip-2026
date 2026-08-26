@@ -11,10 +11,12 @@ nvm install 22
 nvm use 22
 cd worker
 npm install -D wrangler@latest
-npx wrangler login
+npx wrangler login --device --browser=false
 npx wrangler secret put GITHUB_TOKEN
 npx wrangler deploy
 ```
+
+执行登录命令后，终端会显示 Cloudflare 验证网址和一次性验证码。手动复制网址到浏览器，输入验证码并授权；终端出现 `Successfully logged in.` 后再继续部署。设备码登录不依赖本机 `localhost` 回调，适合浏览器无法自动打开的情况。
 
 如果终端提示 `nvm: command not found`，先安装 nvm，重新打开终端后再执行上面的命令。也可以使用 Node.js 官网的 macOS 安装包，安装 Node.js 22 或更高版本。
 
