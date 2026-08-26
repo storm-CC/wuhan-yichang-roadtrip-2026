@@ -34,6 +34,16 @@ node scripts/validate.mjs
 
 账单优先使用攻略页内的自制表格，支持添加、修改、删除费用，并通过 `expense-config.js` 配置的共享接口同步。4 个人打开同一个攻略页面即可查看最新记录；如果接口暂时不可用，页面会先显示当前浏览器缓存。腾讯文档保留为备用编辑入口，可点击“打开腾讯文档”进入原始表格。
 
+## 腾讯云迁移
+
+由于部分网络无法访问 Cloudflare Workers，项目内新增了腾讯云函数版本，文件位于 `tencent-cloud/expense-api/`。部署腾讯云函数、云开发数据库和 API 网关后，将生成的 HTTPS 接口地址写入 `expense-config.js`，格式为：
+
+```js
+window.EXPENSE_API_URL = "https://你的腾讯云API地址/expenses";
+```
+
+具体部署步骤见 `tencent-cloud/expense-api/README.md`。在新的腾讯云接口上线前，不要删除现有 Worker 配置，以便回滚。
+
 ## 提醒
 
 页面中的里程和时间是规划值。出发前 48 小时应重新核对天气、实时导航、道路施工、景区预约和临时交通管制。

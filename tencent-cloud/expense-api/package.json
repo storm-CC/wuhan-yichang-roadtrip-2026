@@ -1,0 +1,8 @@
+{
+  "name": "wuhan-yichang-expense-api",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.9.0"
+  }
+}

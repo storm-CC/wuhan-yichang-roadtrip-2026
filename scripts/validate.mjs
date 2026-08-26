@@ -53,6 +53,7 @@ try {
     const readme = await readFile("README.md", "utf8");
     check("README包含本地预览命令", readme.includes("python3 -m http.server 8000"));
     check("README包含GitHub Pages说明", readme.includes("GitHub Pages"));
+    check("存在腾讯云函数版本", await fileExists("tencent-cloud/expense-api/index.js") && await fileExists("tencent-cloud/expense-api/package.json"));
   }
 
   check("存在.nojekyll", await fileExists(".nojekyll"));
