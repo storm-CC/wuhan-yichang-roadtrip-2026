@@ -28,6 +28,13 @@ try {
   check("包含8个行程日期", ["9月30日", "10月1日", "10月2日", "10月3日", "10月4日", "10月5日", "10月6日", "10月7日"].every((date) => html.includes(date)));
   check("包含每日规划公里数", ["320公里", "140公里", "190公里", "90公里", "180公里", "380公里", "620公里", "410公里"].every((distance) => html.includes(distance)));
   check("包含约2330公里总里程", html.includes("约 2330 公里"));
+  check("包含宜昌已订酒店", html.includes("丽橙酒店·智（宜昌火车东站五一广场店）"));
+  check("包含宜昌单间价格", html.includes("¥220/间"));
+  check("包含宜昌两间合计", html.includes("¥440"));
+  check("包含秭归已订酒店", html.includes("秭归若兮酒店"));
+  check("包含秭归单间价格", html.includes("¥399/间"));
+  check("包含秭归两间合计", html.includes("¥798"));
+  check("包含两晚住宿合计", html.includes("¥1,238"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
   check("10月5日住宿八面山", html.includes("住宿：八面山景区内"));
   check("不包含芙蓉镇行程", !html.includes("前往芙蓉镇") && !html.includes("住宿芙蓉镇"));

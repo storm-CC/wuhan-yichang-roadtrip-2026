@@ -365,6 +365,14 @@
       font-size: .88rem;
     }
 
+    .lodging-summary {
+      display: block;
+      margin-top: 12px;
+      color: var(--sky);
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
     .distance {
       display: inline-flex;
       margin-top: 15px;
@@ -374,6 +382,61 @@
       color: var(--jade);
       font-size: .78rem;
       font-weight: 800;
+    }
+
+    .confirmed-stay {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr auto;
+      gap: 18px;
+      align-items: center;
+      margin-top: 14px;
+      padding: 18px 20px;
+      border: 1px solid rgba(95,208,176,.28);
+      border-radius: var(--radius-md);
+      background: linear-gradient(110deg, rgba(95,208,176,.12), rgba(255,255,255,.035));
+    }
+
+    .confirmed-stay strong {
+      display: block;
+      margin-top: 3px;
+      color: #fff;
+    }
+
+    .confirmed-label {
+      color: var(--jade);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .confirmed-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .confirmed-items span {
+      padding: 6px 9px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .confirmed-total {
+      text-align: right;
+    }
+
+    .confirmed-total span {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .confirmed-total strong {
+      color: var(--gold-soft);
+      font-size: 1.45rem;
     }
 
     .itinerary {
@@ -696,6 +759,8 @@
       .day-main { padding: 24px 20px 28px; }
       .schedule li { grid-template-columns: 76px minmax(0, 1fr); gap: 12px; }
       .detail-grid { grid-template-columns: 1fr; }
+      .confirmed-stay { grid-template-columns: 1fr; gap: 10px; }
+      .confirmed-total { text-align: left; }
       .footer-inner { display: block; }
     }
 
@@ -788,14 +853,20 @@
       </div>
 
       <div class="overview-grid">
-        <div class="overview-card"><span class="date">DAY 01 · 9月30日</span><h3>武汉 → 宜昌</h3><p>下午出发，晚上游船与夜市。</p><span class="distance">320公里</span></div>
-        <div class="overview-card"><span class="date">DAY 02 · 10月1日</span><h3>G348 → 芝茅公路</h3><p>峡江景观公路，夜宿秭归。</p><span class="distance">140公里</span></div>
+        <div class="overview-card"><span class="date">DAY 01 · 9月30日</span><h3>武汉 → 宜昌</h3><p>下午出发，晚上游船与夜市。</p><span class="lodging-summary">丽橙酒店·智 · ¥440/2间</span><span class="distance">320公里</span></div>
+        <div class="overview-card"><span class="date">DAY 02 · 10月1日</span><h3>G348 → 芝茅公路</h3><p>峡江景观公路，夜宿秭归。</p><span class="lodging-summary">秭归若兮酒店 · ¥798/2间</span><span class="distance">140公里</span></div>
         <div class="overview-card"><span class="date">DAY 03 · 10月2日</span><h3>西陵峡 → 木鱼</h3><p>牛肝马肺峡、兵书宝剑峡。</p><span class="distance">190公里</span></div>
         <div class="overview-card"><span class="date">DAY 04 · 10月3日</span><h3>神农顶 → 坪阡</h3><p>全天穿越神农顶景区。</p><span class="distance">90公里</span></div>
         <div class="overview-card"><span class="date">DAY 05 · 10月4日</span><h3>大九湖 → 三峡之巅</h3><p>两处精华游，夜宿兴隆镇。</p><span class="distance">180公里</span></div>
         <div class="overview-card"><span class="date">DAY 06 · 10月5日</span><h3>兴隆 → 八面山</h3><p>长途转场，赶上山顶日落。</p><span class="distance">380公里</span></div>
         <div class="overview-card"><span class="date">DAY 07 · 10月6日</span><h3>八面山 → 醴陵</h3><p>日出后直接长途返程。</p><span class="distance">620公里</span></div>
         <div class="overview-card"><span class="date">DAY 08 · 10月7日</span><h3>醴陵 → 武汉</h3><p>避开午后返程高峰。</p><span class="distance">410公里</span></div>
+      </div>
+
+      <div class="confirmed-stay" aria-label="已确认住宿费用">
+        <div><span class="confirmed-label">已确认住宿</span><strong>9月30日—10月1日 · 2晚</strong></div>
+        <div class="confirmed-items"><span>宜昌 ¥440</span><span>秭归 ¥798</span></div>
+        <div class="confirmed-total"><span>2间房合计</span><strong>¥1,238</strong></div>
       </div>
     </section>
 
@@ -818,7 +889,7 @@
           <div class="callout danger"><strong>今晚优先级：</strong>游船 ＞ 晚餐完整度 ＞ 夜市。若高速堵车导致19:00后才到宜昌，直接联系游船确认，并把夜市改为纯夜宵。</div>
           <button class="toggle-details" type="button" aria-expanded="false">展开住宿与驾驶提示</button>
           <div class="day-details" hidden>
-            <div class="detail-grid"><div class="detail-box"><strong>住宿：宜昌沿江区域</strong><p>选择独立停车场、24小时前台，避免把车开进步行街核心区。</p></div><div class="detail-box"><strong>驾驶</strong><p>正常不堵约4小时，计划仍给服务区短休和进城停车留出余量。</p></div></div>
+            <div class="detail-grid"><div class="detail-box"><strong>住宿：丽橙酒店·智（宜昌火车东站五一广场店）</strong><p>¥220/间，2间合计¥440。已确认入住；到店后核对停车和入住登记。</p></div><div class="detail-box"><strong>驾驶</strong><p>正常不堵约4小时，计划仍给服务区短休和进城停车留出余量。</p></div></div>
           </div>
         </div>
       </article>
@@ -841,7 +912,7 @@
           <div class="callout"><strong>观星策略：</strong>10月1日月光偏强，以亮星、星座和峡谷夜色为主。如果观景点距离酒店超过1小时，提前结束，不安排疲劳夜驾。</div>
           <button class="toggle-details" type="button" aria-expanded="false">展开雨天与住宿提示</button>
           <div class="day-details" hidden>
-            <div class="detail-grid"><div class="detail-box"><strong>住宿：秭归茅坪</strong><p>住新城，靠近次日出城方向，不住芝茅公路深处。</p></div><div class="detail-box"><strong>小雨切换</strong><p>改走宜昌→三峡人家→秭归，约110—130公里，取消观星。</p></div></div>
+            <div class="detail-grid"><div class="detail-box"><strong>住宿：秭归若兮酒店</strong><p>¥399/间，2间合计¥798。已确认入住，次日直接前往木鱼镇。</p></div><div class="detail-box"><strong>小雨切换</strong><p>改走宜昌→三峡人家→秭归，约110—130公里，取消观星。</p></div></div>
           </div>
         </div>
       </article>
