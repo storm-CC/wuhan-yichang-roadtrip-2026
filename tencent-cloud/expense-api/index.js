@@ -2,17 +2,17 @@ const tcb = require("@cloudbase/node-sdk");
 
 const DATE_OPTIONS = new Set(["9月30日", "10月1日", "10月2日", "10月3日", "10月4日", "10月5日", "10月6日", "10月7日", "其他"]);
 const CATEGORY_OPTIONS = new Set(["住宿", "餐饮", "门票", "充电", "停车", "其他"]);
-const COLLECTION_NAME = process.env.TCB_COLLECTION || "trip_expenses";
+const TABLE_NAME = process.env.TCB_TABLE || "trip_expenses";
 const DOCUMENT_ID = process.env.TCB_DOCUMENT_ID || "current";
 
-let database;
+let models;
 
-function getDatabase() {
-  if (!database) {
+function getModels() {
+  if (!models) {
     const app = tcb.init({ env: process.env.TCB_ENV_ID });
-    database = app.database();
+    models = app.models;
   }
-  return database;
+  return models;
 }
 
 function corsHeaders() {
@@ -63,17 +63,36 @@ function normalizeExpenses(input) {
   });
 }
 
+async function runSql(sql, params = {}) {
+  return getModels().$runSQL(sql, params);
+}
+
+function queryRows(result) {
+  return result?.data?.executeResultList || result?.executeResultList || [];
+}
+
 async function readExpenses() {
-  const result = await getDatabase().collection(COLLECTION_NAME).doc(DOCUMENT_ID).get();
-  const document = Array.isArray(result.data) ? result.data[0] : result.data;
-  return normalizeExpenses(document?.expenses || []);
+  const result = await runSql(`SELECT payload FROM \`${TABLE_NAME}\` WHERE _id = {{id}} LIMIT 1`, { id: DOCUMENT_ID });
+  const row = queryRows(result)[0];
+  if (!row?.payload) return [];
+  return normalizeExpenses(JSON.parse(row.payload));
 }
 
 async function saveExpenses(expenses) {
-  await getDatabase().collection(COLLECTION_NAME).doc(DOCUMENT_ID).set({
-    expenses,
-    updatedAt: new Date().toISOString()
+  const payload = JSON.stringify(expenses);
+  const updatedAt = new Date().toISOString();
+  const updateResult = await runSql(`UPDATE \`${TABLE_NAME}\` SET payload = {{payload}}, updated_at = {{updatedAt}} WHERE _id = {{id}}`, {
+    id: DOCUMENT_ID,
+    payload,
+    updatedAt
   });
+  if (!queryRows(updateResult).length && !updateResult?.data?.total) {
+    await runSql(`INSERT INTO \`${TABLE_NAME}\` (_id, payload, updated_at) VALUES ({{id}}, {{payload}}, {{updatedAt}})`, {
+      id: DOCUMENT_ID,
+      payload,
+      updatedAt
+    });
+  }
   return expenses;
 }
 
