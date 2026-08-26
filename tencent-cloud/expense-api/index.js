@@ -3,7 +3,6 @@ const tcb = require("@cloudbase/node-sdk");
 const DATE_OPTIONS = new Set(["9月30日", "10月1日", "10月2日", "10月3日", "10月4日", "10月5日", "10月6日", "10月7日", "其他"]);
 const CATEGORY_OPTIONS = new Set(["住宿", "餐饮", "门票", "充电", "停车", "其他"]);
 const TABLE_NAME = process.env.TCB_TABLE || "trip_expenses";
-const DOCUMENT_ID = process.env.TCB_DOCUMENT_ID || "current";
 
 let models;
 
@@ -72,7 +71,7 @@ function queryRows(result) {
 }
 
 async function readExpenses() {
-  const result = await runSql(`SELECT payload FROM \`${TABLE_NAME}\` WHERE _id = {{id}} LIMIT 1`, { id: DOCUMENT_ID });
+  const result = await runSql(`SELECT id, payload FROM \"${TABLE_NAME}\" ORDER BY created_at ASC LIMIT 1`);
   const row = queryRows(result)[0];
   if (!row?.payload) return [];
   return normalizeExpenses(JSON.parse(row.payload));
@@ -80,18 +79,15 @@ async function readExpenses() {
 
 async function saveExpenses(expenses) {
   const payload = JSON.stringify(expenses);
-  const updatedAt = new Date().toISOString();
-  const updateResult = await runSql(`UPDATE \`${TABLE_NAME}\` SET payload = {{payload}}, updated_at = {{updatedAt}} WHERE _id = {{id}}`, {
-    id: DOCUMENT_ID,
-    payload,
-    updatedAt
-  });
-  if (!queryRows(updateResult).length && !updateResult?.data?.total) {
-    await runSql(`INSERT INTO \`${TABLE_NAME}\` (_id, payload, updated_at) VALUES ({{id}}, {{payload}}, {{updatedAt}})`, {
-      id: DOCUMENT_ID,
-      payload,
-      updatedAt
+  const currentResult = await runSql(`SELECT id FROM \"${TABLE_NAME}\" ORDER BY created_at ASC LIMIT 1`);
+  const currentRow = queryRows(currentResult)[0];
+  if (currentRow?.id) {
+    await runSql(`UPDATE \"${TABLE_NAME}\" SET payload = {{payload}} WHERE id = {{id}}`, {
+      id: currentRow.id,
+      payload
     });
+  } else {
+    await runSql(`INSERT INTO \"${TABLE_NAME}\" (payload) VALUES ({{payload}})`, { payload });
   }
   return expenses;
 }
