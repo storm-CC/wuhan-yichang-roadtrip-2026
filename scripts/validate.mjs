@@ -37,7 +37,7 @@ try {
   check("包含两晚住宿合计", html.includes("¥1,238"));
   check("包含记账单模块", html.includes('id="expenses"') && html.includes("旅行记账单"));
   check("记账单预填两笔住宿", html.includes("丽橙酒店·智（宜昌火车东站五一广场店）") && html.includes("秭归若兮酒店"));
-  check("顶部包含记账单入口", html.includes('href="#expenses"') && html.includes("查看团队账单"));
+  check("顶部包含记账单入口", html.includes('href="#expenses"') && html.includes("打开记账单"));
   check("记账单使用自制表格", html.includes('id="expense-list"') && html.includes('id="add-expense"') && html.includes('id="sync-expenses"'));
   check("记账单配置共享接口", html.includes('src="./expense-config.js"') && html.includes("expenseApiUrl"));
   check("10月4日住宿兴隆镇", html.includes("住宿：奉节兴隆镇"));
