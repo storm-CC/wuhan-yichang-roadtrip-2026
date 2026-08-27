@@ -4,14 +4,20 @@ const DATE_OPTIONS = new Set(["9月30日", "10月1日", "10月2日", "10月3日"
 const CATEGORY_OPTIONS = new Set(["住宿", "餐饮", "门票", "充电", "停车", "其他"]);
 const TABLE_NAME = process.env.TCB_TABLE || "trip_expenses";
 
-let models;
+let app;
 
-function getModels() {
-  if (!models) {
-    const app = tcb.init({ env: process.env.TCB_ENV_ID });
-    models = app.models;
+function getApp() {
+  if (!app) {
+    app = tcb.init({ env: process.env.TCB_ENV_ID });
   }
-  return models;
+  return app;
+}
+
+function getDatabase() {
+  return getApp().rdb({
+    instance: process.env.TCB_DB_INSTANCE || process.env.TCB_DB_LINK_NAME || "pgdb-2ovu1jyx",
+    database: process.env.TCB_DB_SCHEMA || "public"
+  });
 }
 
 function corsHeaders() {
@@ -62,32 +68,39 @@ function normalizeExpenses(input) {
   });
 }
 
-async function runSql(sql, params = {}) {
-  return getModels().$runSQL(sql, params);
-}
-
-function queryRows(result) {
-  return result?.data?.executeResultList || result?.executeResultList || [];
+function databaseResult(result) {
+  if (result?.error) {
+    throw new Error(result.error.message || "Database request failed");
+  }
+  return result?.data || [];
 }
 
 async function readExpenses() {
-  const result = await runSql(`SELECT id, payload FROM \"${TABLE_NAME}\" ORDER BY created_at ASC LIMIT 1`);
-  const row = queryRows(result)[0];
+  const result = await getDatabase()
+    .from(TABLE_NAME)
+    .select("id,payload")
+    .order("created_at", { ascending: true })
+    .limit(1);
+  const row = databaseResult(result)[0];
   if (!row?.payload) return [];
   return normalizeExpenses(JSON.parse(row.payload));
 }
 
 async function saveExpenses(expenses) {
   const payload = JSON.stringify(expenses);
-  const currentResult = await runSql(`SELECT id FROM \"${TABLE_NAME}\" ORDER BY created_at ASC LIMIT 1`);
-  const currentRow = queryRows(currentResult)[0];
+  const currentResult = await getDatabase()
+    .from(TABLE_NAME)
+    .select("id")
+    .order("created_at", { ascending: true })
+    .limit(1);
+  const currentRow = databaseResult(currentResult)[0];
   if (currentRow?.id) {
-    await runSql(`UPDATE \"${TABLE_NAME}\" SET payload = {{payload}} WHERE id = {{id}}`, {
-      id: currentRow.id,
-      payload
-    });
+    databaseResult(await getDatabase()
+      .from(TABLE_NAME)
+      .update({ payload })
+      .eq("id", currentRow.id));
   } else {
-    await runSql(`INSERT INTO \"${TABLE_NAME}\" (payload) VALUES ({{payload}})`, { payload });
+    databaseResult(await getDatabase().from(TABLE_NAME).insert({ payload }));
   }
   return expenses;
 }

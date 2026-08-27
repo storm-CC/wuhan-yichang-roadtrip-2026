@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "wuhan-yichang-expense-d3b2414cfe",
+  "functionRoot": ".",
+  "functions": [
+    {
+      "name": "expense-api",
+      "timeout": 10,
+      "memorySize": 256,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main_handler",
+      "envVariables": {
+        "TCB_ENV_ID": "wuhan-yichang-expense-d3b2414cfe",
+        "TCB_TABLE": "trip_expenses",
+        "TCB_DB_LINK_NAME": "pgdb-2ovu1jyx",
+        "ALLOWED_ORIGIN": "https://storm-cc.github.io"
+      }
+    }
+  ]
+}
