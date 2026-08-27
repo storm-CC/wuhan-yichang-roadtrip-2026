@@ -1253,6 +1253,378 @@
       }
     }
 
+    /* Route-book direction: material, editorial, and purpose-led rather than decorative. */
+    :root {
+      --ink: #202a24;
+      --muted: #69736a;
+      --navy-950: #e8e1d2;
+      --navy-900: #e8e1d2;
+      --navy-800: #d8d0bf;
+      --navy-700: #bdc7b8;
+      --paper: #f8f4ea;
+      --paper-ink: #202a24;
+      --gold: #b66e36;
+      --gold-soft: #93552c;
+      --jade: #456a57;
+      --sky: #456a57;
+      --danger: #a34738;
+      --line: #c5beae;
+      --shadow: none;
+      --radius-xl: 0;
+      --radius-lg: 0;
+      --radius-md: 0;
+    }
+
+    html { background: var(--navy-950); }
+
+    body {
+      color: var(--ink);
+      background: var(--navy-950);
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .35;
+      background-image: repeating-linear-gradient(90deg, rgba(32, 42, 36, .028) 0 1px, transparent 1px 7px);
+    }
+
+    .site-header {
+      min-height: 650px;
+      padding: 0;
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      color: #f7f1e7;
+      background: #1d3028;
+      border: 0;
+    }
+
+    .site-header::before,
+    .site-header::after { display: none; }
+
+    .hero-media {
+      left: 51%;
+      right: 0;
+      z-index: 0;
+    }
+
+    .hero-media img {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      clip-path: none;
+      filter: saturate(.78) contrast(1.03);
+      object-position: center;
+    }
+
+    .hero-media::after {
+      inset: 0 auto 0 0;
+      width: 28%;
+      background: #1d3028;
+    }
+
+    .hero-credit {
+      right: 24px;
+      bottom: 16px;
+      color: rgba(247, 241, 231, .7);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: min(1160px, calc(100vw - 48px));
+      padding: 72px 52% 68px 0;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      gap: 9px;
+      color: #dcb383;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    .eyebrow::before { width: 28px; background: #dcb383; }
+
+    h1 {
+      max-width: none;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+      font-size: clamp(3.35rem, 6.7vw, 6.15rem);
+      font-weight: 700;
+      line-height: 1.04;
+    }
+
+    h1 .title-main,
+    h1 .title-sub { color: #f7f1e7; }
+
+    h1 .title-sub {
+      margin-top: 16px;
+      font-size: .36em;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-weight: 500;
+      letter-spacing: .12em;
+      line-height: 1.45;
+      -webkit-text-stroke: 0;
+    }
+
+    .hero-copy {
+      max-width: 555px;
+      margin-top: 26px;
+      color: #d4d5c9;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: 1.08rem;
+      line-height: 1.9;
+    }
+
+    .hero-actions { margin-top: 28px; gap: 0; }
+
+    .button {
+      min-height: 43px;
+      padding: 9px 15px;
+      border-radius: 0;
+      border-color: rgba(247, 241, 231, .48);
+      background: transparent;
+      color: inherit;
+      box-shadow: none;
+    }
+
+    .button + .button { border-left: 0; }
+    .button:hover { transform: none; background: rgba(247, 241, 231, .1); border-color: #f7f1e7; }
+    .button-primary { color: #1d3028; background: #e5c28d; border-color: #e5c28d; }
+    .button-primary:hover { color: #1d3028; background: #f0d6aa; border-color: #f0d6aa; }
+
+    .stats {
+      gap: 0;
+      max-width: none;
+      margin-top: 46px;
+      border-top: 1px solid rgba(247, 241, 231, .35);
+      border-bottom: 1px solid rgba(247, 241, 231, .35);
+    }
+
+    .stat {
+      min-height: 102px;
+      padding: 16px 17px;
+      border: 0;
+      border-right: 1px solid rgba(247, 241, 231, .26);
+      border-radius: 0;
+      background: transparent;
+      backdrop-filter: none;
+    }
+    .stat:last-child { border-right: 0; }
+    .stat strong { color: #f2d29a; font-size: 1.55rem; }
+    .stat span { color: #c9cbbf; font-size: .78rem; }
+
+    .date-nav {
+      background: #f8f4ea;
+      border-bottom-color: #c5beae;
+      backdrop-filter: none;
+    }
+    .date-nav a { border-radius: 0; color: #4e574f; }
+    .date-nav a:hover { color: #1d3028; background: #e2dbcc; }
+    .date-nav a.expense-link { color: #8c4e28; background: #efe2c7; }
+
+    main { padding: 76px 0 100px; }
+    .section-heading { margin-bottom: 28px; }
+    .section-heading h2,
+    .day-main h3,
+    .support-card h3 {
+      color: #203128;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+      font-weight: 700;
+    }
+    .section-heading p { color: #657068; }
+
+    .route-strip {
+      padding: 22px 0;
+      border-width: 1px 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .route-stop { color: #58635a; }
+    .route-stop::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #9b5d32;
+      box-shadow: none;
+      transform: none;
+    }
+    .route-stop:not(:last-child)::after { background: #bfb7a6; }
+
+    .overview-grid { gap: 0; border-top: 1px solid #c5beae; }
+    .overview-card {
+      min-height: 160px;
+      padding: 19px 16px 18px 0;
+      border: 0;
+      border-right: 1px solid #c5beae;
+      border-bottom: 1px solid #c5beae;
+      border-radius: 0;
+      background: transparent;
+    }
+    .overview-card + .overview-card { padding-left: 16px; }
+    .overview-card:last-child { border-right: 0; }
+    .overview-card .date { color: #8c4e28; }
+    .overview-card h3 { color: #203128; }
+    .overview-card p { color: #637068; }
+    .lodging-summary { color: #456a57; }
+    .distance { border-radius: 0; color: #456a57; background: transparent; padding: 4px 0; }
+
+    .confirmed-stay {
+      margin-top: 22px;
+      padding: 18px 0;
+      border-width: 1px 0;
+      border-color: #9eac9c;
+      border-radius: 0;
+      background: transparent;
+    }
+    .confirmed-stay strong { color: #203128; }
+    .confirmed-label, .day-kicker { color: #456a57; }
+    .confirmed-items { color: #637068; }
+    .confirmed-items span { padding: 0; border: 0; border-radius: 0; background: transparent; }
+    .confirmed-total strong { color: #8c4e28; }
+
+    .itinerary { gap: 0; margin-top: 76px; border-top: 2px solid #203128; }
+    .day-card {
+      grid-template-columns: 180px minmax(0, 1fr);
+      overflow: visible;
+      border: 0;
+      border-bottom: 1px solid #aaa391;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .day-side {
+      padding: 28px 24px 28px 0;
+      color: #203128;
+      background: transparent;
+      border-right: 1px solid #aaa391;
+    }
+    .day-number { color: #9b5d32; font-size: 3.35rem; font-weight: 700; }
+    .day-date { color: #203128; }
+    .day-weekday, .day-metric span { color: #657068; }
+    .day-metric { border-top-color: #aaa391; }
+    .day-metric strong { color: #203128; }
+    .day-main { padding: 30px 0 34px 34px; }
+    .day-main h3 { margin-top: 7px; font-size: clamp(1.7rem, 3.3vw, 2.35rem); }
+    .route-line { color: #667168; }
+    .tag { border-radius: 0; border-color: #b8b1a0; background: transparent; color: #46554b; }
+    .schedule li { border-top-color: #c5beae; }
+    .schedule time { color: #8c4e28; }
+    .schedule span { color: #2e3b32; }
+    .callout { border-left-color: #9b5d32; border-radius: 0; background: #eee1c7; color: #4b392a; }
+    .callout.danger { border-left-color: #a34738; background: #f0d9d1; color: #63352f; }
+    .detail-box { border-radius: 0; border-color: #c5beae; background: #f3ecdc; }
+    .detail-box strong { color: #456a57; }
+    .detail-box p { color: #637068; }
+    .toggle-details { color: #8c4e28; }
+
+    .support-section { margin-top: 80px; }
+    .support-grid, .weather-tabs { gap: 0; border-top: 1px solid #c5beae; }
+    .support-card, .weather-card {
+      min-height: 0;
+      padding: 24px 20px 28px 0;
+      border: 0;
+      border-right: 1px solid #c5beae;
+      border-bottom: 1px solid #c5beae;
+      border-radius: 0;
+      background: transparent;
+      color: #203128;
+    }
+    .support-card + .support-card, .weather-card + .weather-card { padding-left: 20px; }
+    .support-card:last-child, .weather-card:last-child { border-right: 0; }
+    .support-card.accent { background: transparent; }
+    .support-card.dark { background: transparent; color: #203128; border-color: #c5beae; }
+    .weather-icon { display: none; }
+    .weather-card h3 { color: #203128; margin-top: 0; }
+    .weather-card p { color: #637068; }
+    .weather-card strong { color: #8c4e28; }
+
+    .expense-section { margin-top: 80px; }
+    .expense-card {
+      padding: 0;
+      border-width: 1px 0;
+      border-color: #9eac9c;
+      border-radius: 0;
+      background: transparent;
+    }
+    .expense-online-head { padding-top: 22px; }
+    .expense-online-label { color: #456a57; }
+    .expense-online-head h3 { color: #203128; }
+    .expense-online-head p, .expense-note, .expense-storage-note { color: #637068; }
+    .expense-summary { gap: 0; margin-bottom: 20px; border: 1px solid #c5beae; }
+    .expense-stat { padding: 15px 16px; border: 0; border-right: 1px solid #c5beae; border-radius: 0; background: transparent; }
+    .expense-stat:last-child { border-right: 0; }
+    .expense-stat span { color: #637068; }
+    .expense-stat strong { color: #8c4e28; }
+    .expense-header { color: #637068; }
+    .expense-row input, .expense-row select {
+      color: #203128;
+      border-color: #bdb5a5;
+      border-radius: 0;
+      background: #f8f4ea;
+    }
+    .expense-row select option { color: #203128; background: #f8f4ea; }
+    .expense-remove { border-radius: 0; border-color: #c68f85; color: #963f35; background: transparent; }
+    .expense-empty { border-radius: 0; color: #637068; }
+    .expense-actions { padding-bottom: 22px; }
+    .expense-actions .button { color: #203128; border-color: #aaa391; }
+    .expense-actions .button-primary { color: #1d3028; border-color: #e5c28d; }
+    .expense-sync-status[data-state="success"] { color: #456a57; }
+    .expense-sync-status[data-state="pending"] { color: #8c4e28; }
+
+    .footer { border-top-color: #c5beae; color: #637068; }
+    .top-button { border-radius: 0; border-color: #aaa391; color: #203128; background: #f8f4ea; backdrop-filter: none; }
+
+    @media (max-width: 900px) {
+      .hero { padding-right: 48%; }
+      .overview-card:nth-child(2n) { padding-left: 16px; }
+      .overview-card:nth-child(2n) { border-right: 0; }
+      .support-card:nth-child(2n), .weather-card:nth-child(2n) { padding-left: 20px; }
+    }
+
+    @media (max-width: 640px) {
+      .site-header { min-height: 690px; }
+      .hero-media { inset: 0; }
+      .hero-media img { object-position: 64% center; }
+      .hero-media::after { inset: 0; width: auto; background: rgba(29, 48, 40, .74); }
+      .hero { width: min(100% - 32px, 1160px); padding: 58px 0 42px; }
+      h1 { font-size: clamp(3rem, 14vw, 4.25rem); }
+      h1 .title-sub { font-size: .34em; letter-spacing: .09em; }
+      .hero-copy { font-size: 1rem; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .button + .button { border-left: 1px solid rgba(247, 241, 231, .48); border-top: 0; }
+      .stats { margin-top: 34px; grid-template-columns: 1fr 1fr; }
+      .stat { min-height: 86px; padding: 13px 12px; }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n + 2) { border-bottom: 1px solid rgba(247, 241, 231, .26); }
+      .date-nav-inner { padding: 8px 0; }
+      main { padding-top: 52px; }
+      .route-strip { padding-left: 10px; padding-right: 10px; }
+      .overview-grid { display: block; }
+      .overview-card, .overview-card + .overview-card { padding: 17px 0; border-right: 0; }
+      .confirmed-stay { display: block; }
+      .confirmed-total { margin-top: 10px; }
+      .day-card { display: block; }
+      .day-side { grid-template-columns: 64px 1fr auto; padding: 20px 0; border-right: 0; border-bottom: 1px solid #aaa391; }
+      .day-main { padding: 23px 0 28px; }
+      .day-number { font-size: 2.85rem; }
+      .support-grid, .weather-tabs { display: block; }
+      .support-card, .weather-card, .support-card + .support-card, .weather-card + .weather-card { padding: 21px 0; border-right: 0; }
+      .expense-card { border-width: 1px 0; }
+      .expense-summary { display: block; }
+      .expense-stat { border-right: 0; border-bottom: 1px solid #c5beae; }
+      .expense-stat:last-child { border-bottom: 0; }
+      .expense-row { border-radius: 0; border-color: #c5beae; background: #f3ecdc; }
+    }
+
     @media print {
       :root { --content: 100%; }
       body { color: #111; background: #fff; font-size: 10.5pt; }
@@ -1293,12 +1665,12 @@
       <span class="hero-credit">图：Jan Kranendonk / Wikimedia Commons · CC BY-SA 4.0</span>
     </div>
     <div class="hero">
-      <p class="eyebrow">秋水为引 · 山风为伴 · 2026 国庆行记</p>
-      <h1><span class="title-main">穿过峡江<br class="mobile-break">与群山</span><span class="title-sub">武汉 · 宜昌 · <br class="mobile-break">神农架 · 八面山</span></h1>
-      <p class="hero-copy">从武汉出发，沿着峡江的水声进入群山深处。经过西陵峡、神农顶、大九湖与三峡之巅，最后在八面山等一场日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
+      <p class="eyebrow">2026.09.30 - 10.07 / 四人自驾</p>
+      <h1><span class="title-main">鄂西—湘西<br class="mobile-break">自驾路线册</span><span class="title-sub">武汉 · 宜昌 · 秭归 · 神农架 · 奉节 · 八面山 · 醴陵</span></h1>
+      <p class="hero-copy">8天7晚，约 2330 公里。西陵峡入山，神农架看高山湿地，三峡之巅望夔门，最后在八面山住一晚。路线、住宿和团队账单都在这里。</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#overview">查看行程总览 ↓</a>
-        <a class="button" href="#expenses">打开记账单 ↓</a>
+        <a class="button button-primary" href="#overview">从路线总览开始</a>
+        <a class="button" href="#expenses">查看团队账单</a>
         <button class="button" type="button" data-action="print">打印 / 保存 PDF</button>
       </div>
       <div class="stats" aria-label="行程关键数据">
