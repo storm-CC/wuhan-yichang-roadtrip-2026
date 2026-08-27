@@ -47,3 +47,7 @@ window.EXPENSE_API_URL = "https://你的腾讯云API地址/expenses";
 ## 提醒
 
 页面中的里程和时间是规划值。出发前 48 小时应重新核对天气、实时导航、道路施工、景区预约和临时交通管制。
+
+## 页面素材
+
+首屏三峡图片来自 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:China_1996_76.jpg)，作者 Jan Kranendonk，采用 CC BY-SA 4.0 许可。

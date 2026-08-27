@@ -116,6 +116,44 @@
       filter: blur(1px);
     }
 
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-media img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(64vw, 920px);
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.5;
+      filter: saturate(0.7) contrast(0.95);
+      clip-path: polygon(24% 0, 100% 0, 100% 100%, 0 100%, 13% 72%);
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--navy-900) 14%, rgba(16, 30, 35, 0.86) 43%, rgba(16, 30, 35, 0.18) 100%),
+                  linear-gradient(0deg, rgba(9, 18, 23, 0.85), transparent 42%);
+    }
+
+    .hero-credit {
+      position: absolute;
+      right: max(16px, calc((100vw - 1160px) / 2));
+      bottom: 18px;
+      z-index: 1;
+      color: rgba(243, 239, 229, 0.56);
+      font-size: 0.66rem;
+      letter-spacing: 0.03em;
+    }
+
     .hero {
       width: var(--content);
       margin: 0 auto;
@@ -1030,6 +1068,10 @@
         padding: 88px 0 124px;
       }
 
+      .hero-media img {
+        width: min(62vw, 900px);
+      }
+
       .hero-copy {
         max-width: 700px;
         color: #c0cbc5;
@@ -1195,13 +1237,27 @@
       .hero-copy {
         font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
       }
+
+      .hero-media img {
+        width: 100%;
+        opacity: 0.42;
+        clip-path: none;
+      }
+
+      .hero-media::after {
+        background: linear-gradient(180deg, rgba(16, 30, 35, 0.54), rgba(9, 18, 23, 0.82));
+      }
+
+      .hero-credit {
+        display: none;
+      }
     }
 
     @media print {
       :root { --content: 100%; }
       body { color: #111; background: #fff; font-size: 10.5pt; }
       .site-header { min-height: 0; padding: 24px 0; color: #111; border-bottom: 2px solid #111; }
-      .site-header::before, .site-header::after, .date-nav, .hero-actions, .top-button, .toggle-details { display: none !important; }
+      .site-header::before, .site-header::after, .hero-media, .date-nav, .hero-actions, .top-button, .toggle-details { display: none !important; }
       h1 { font-size: 34pt; letter-spacing: 0; }
       h1 .title-main, h1 .title-sub { color: #111; -webkit-text-stroke: 0; }
       .hero-copy, .stat span, .route-line, .section-heading p, .day-weekday, .schedule span, .detail-box p { color: #444; }
@@ -1232,6 +1288,10 @@
   <a class="skip-link" href="#main-content">跳到行程正文</a>
 
   <header class="site-header" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <img src="./assets/three-gorges-mist.jpg" alt="雾中的西陵峡与长江">
+      <span class="hero-credit">图：Jan Kranendonk / Wikimedia Commons · CC BY-SA 4.0</span>
+    </div>
     <div class="hero">
       <p class="eyebrow">秋水为引 · 山风为伴 · 2026 国庆行记</p>
       <h1><span class="title-main">穿过峡江<br class="mobile-break">与群山</span><span class="title-sub">武汉 · 宜昌 · <br class="mobile-break">神农架 · 八面山</span></h1>
