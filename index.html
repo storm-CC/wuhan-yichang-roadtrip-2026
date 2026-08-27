@@ -996,12 +996,213 @@
       }
     }
 
+    :root {
+      --ink: #f3efe5;
+      --muted: #aebbb5;
+      --navy-950: #091217;
+      --navy-900: #101e23;
+      --navy-800: #193039;
+      --navy-700: #2b494b;
+      --paper: #f1e9d9;
+      --paper-ink: #213239;
+      --gold: #d8a052;
+      --gold-soft: #f1ca82;
+      --jade: #8eb6a5;
+      --sky: #b9ccc4;
+      --danger: #e58b73;
+      --line: rgba(243, 239, 229, 0.14);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      --radius-xl: 18px;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+    }
+
+    @media (min-width: 641px) {
+      body {
+        background-color: var(--navy-950);
+        background-image:
+          linear-gradient(180deg, var(--navy-900), var(--navy-950) 56%, #050b0e),
+          repeating-linear-gradient(0deg, rgba(243, 239, 229, 0.018) 0 1px, transparent 1px 5px);
+      }
+
+      .site-header {
+        min-height: 700px;
+        padding: 88px 0 124px;
+      }
+
+      .hero-copy {
+        max-width: 700px;
+        color: #c0cbc5;
+        font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+      }
+    }
+
+    .site-header::before {
+      background: linear-gradient(135deg, transparent 22%, rgba(142, 182, 165, 0.08) 22.5%, transparent 48%),
+                  linear-gradient(26deg, #0b1a20 0 32%, #163039 32.5% 56%, #091318 56.5%);
+    }
+
+    .site-header::after {
+      opacity: 0.58;
+    }
+
+    h1,
+    .section-heading h2,
+    .day-main h3 {
+      letter-spacing: 0;
+    }
+
+    h1,
+    .section-heading h2,
+    .day-main h3,
+    .support-card h3 {
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+      font-weight: 700;
+    }
+
+    h1 .title-sub {
+      -webkit-text-stroke: 1.5px rgba(243, 239, 229, 0.68);
+    }
+
+    .eyebrow {
+      color: var(--gold-soft);
+      letter-spacing: 0.12em;
+    }
+
+    .button,
+    .stat,
+    .route-strip,
+    .overview-card,
+    .confirmed-stay,
+    .day-card,
+    .support-card,
+    .weather-card,
+    .expense-card {
+      border-radius: 8px;
+    }
+
+    .button {
+      border-color: rgba(243, 239, 229, 0.22);
+      background: rgba(243, 239, 229, 0.055);
+    }
+
+    .button-primary {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .stat {
+      background: rgba(9, 18, 23, 0.58);
+      border-color: rgba(243, 239, 229, 0.16);
+    }
+
+    .date-nav a {
+      border-radius: 4px;
+    }
+
+    .date-nav a.expense-link {
+      color: var(--gold-soft);
+      background: rgba(216, 160, 82, 0.12);
+    }
+
+    .route-strip {
+      padding: 28px 20px;
+      background: rgba(243, 239, 229, 0.045);
+    }
+
+    .route-stop::before {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--gold);
+      box-shadow: 0 0 0 5px rgba(216, 160, 82, 0.13);
+      transform: rotate(45deg);
+    }
+
+    .route-stop:not(:last-child)::after {
+      background: linear-gradient(90deg, var(--gold), rgba(142, 182, 165, 0.45));
+    }
+
+    .overview-card {
+      background: rgba(243, 239, 229, 0.045);
+      border-color: rgba(243, 239, 229, 0.15);
+    }
+
+    .overview-card .date,
+    .day-number,
+    .schedule time,
+    .confirmed-total strong {
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+    }
+
+    .confirmed-stay {
+      background: rgba(142, 182, 165, 0.11);
+      border-color: rgba(142, 182, 165, 0.3);
+    }
+
+    .day-card {
+      background: rgba(16, 30, 35, 0.88);
+      box-shadow: 0 20px 52px rgba(0, 0, 0, 0.24);
+    }
+
+    .day-side {
+      background: linear-gradient(180deg, rgba(142, 182, 165, 0.12), transparent 42%), rgba(243, 239, 229, 0.025);
+    }
+
+    .day-number {
+      font-weight: 700;
+    }
+
+    .tag,
+    .distance {
+      border-radius: 4px;
+    }
+
+    .tag {
+      border-color: rgba(243, 239, 229, 0.16);
+      background: rgba(243, 239, 229, 0.05);
+    }
+
+    .callout {
+      background: rgba(216, 160, 82, 0.1);
+    }
+
+    .expense-card {
+      border-color: rgba(185, 204, 196, 0.28);
+      background: rgba(185, 204, 196, 0.075);
+    }
+
+    .expense-stat {
+      border-radius: 6px;
+      background: rgba(9, 18, 23, 0.38);
+    }
+
+    .expense-row input,
+    .expense-row select,
+    .expense-remove {
+      border-radius: 5px;
+    }
+
+    @media (max-width: 640px) {
+      h1,
+      .section-heading h2,
+      .day-main h3,
+      .support-card h3 {
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      }
+    }
+
     @media print {
       :root { --content: 100%; }
       body { color: #111; background: #fff; font-size: 10.5pt; }
       .site-header { min-height: 0; padding: 24px 0; color: #111; border-bottom: 2px solid #111; }
       .site-header::before, .site-header::after, .date-nav, .hero-actions, .top-button, .toggle-details { display: none !important; }
-      h1 { font-size: 34pt; letter-spacing: -.04em; }
+      h1 { font-size: 34pt; letter-spacing: 0; }
       h1 .title-main, h1 .title-sub { color: #111; -webkit-text-stroke: 0; }
       .hero-copy, .stat span, .route-line, .section-heading p, .day-weekday, .schedule span, .detail-box p { color: #444; }
       .stats { margin-top: 20px; }
@@ -1032,9 +1233,9 @@
 
   <header class="site-header" id="top">
     <div class="hero">
-      <p class="eyebrow">2026 Golden Week Road Trip</p>
+      <p class="eyebrow">秋水为引 · 山风为伴 · 2026 国庆行记</p>
       <h1><span class="title-main">穿过峡江<br class="mobile-break">与群山</span><span class="title-sub">武汉 · 宜昌 · <br class="mobile-break">神农架 · 八面山</span></h1>
-      <p class="hero-copy">9月30日14:00武汉出发，沿G348进入西陵峡，经神农顶、大九湖与三峡之巅，最终在八面山看日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
+      <p class="hero-copy">从武汉出发，沿着峡江的水声进入群山深处。经过西陵峡、神农顶、大九湖与三峡之巅，最后在八面山等一场日落、星空和日出。8天7晚，规划总里程约 2330 公里。</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#overview">查看行程总览 ↓</a>
         <a class="button" href="#expenses">打开记账单 ↓</a>
